@@ -1,0 +1,27 @@
+{
+  "name": "fec_project_catwalk",
+  "version": "1.0.0",
+  "description": "Project Title:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HR-DEN17-TEAM-FRODO/FEC_Project_Catwalk.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HR-DEN17-TEAM-FRODO/FEC_Project_Catwalk/issues"
+  },
+  "homepage": "https://github.com/HR-DEN17-TEAM-FRODO/FEC_Project_Catwalk#readme",
+  "devDependencies": {
+    "eslint": "^8.8.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0"
+  }
+}
