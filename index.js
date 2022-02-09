@@ -3,3 +3,4 @@ function myFunc(any) {
 }
 
 myFunc('hi');
+myFunc('hi');
