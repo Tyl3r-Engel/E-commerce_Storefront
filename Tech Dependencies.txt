@@ -1,0 +1,56 @@
+General Project Stuff
+  Dependencies
+    None
+  Version
+    Transpile with Babel (via Webpack)
+  Linting
+    eslint
+
+Front-End
+  Asset Compilation + loading
+    Webpack-dev
+  Front-End MVC
+    ReactJS
+  Data store
+    GraphQL
+  CSS Frameworks
+    None
+
+Server
+  MVC
+    ExpressJS
+  Auth
+    None
+  Templating
+    None
+
+Database
+  Primary Database
+    None
+  Caching and queueing
+    None
+
+Testing
+  Frameworks and Libraries
+    Jest
+    React Testing Library
+  Code Coverage
+    Jest
+  End-to-end Testing
+    Cypress.io
+  Cloud Testing
+    None
+
+=======================
+Deployment - Waiting until phase 3 to decide
+  Containers and Swarms
+    DockerHub
+    DockerCloud
+  One-click Deploy
+    AWS Elastic Beanstalk
+  Continuous integration
+    CircleCI
+    TravisCI
+  Performance and Analytics
+    New Relic
+    Mix Panel
