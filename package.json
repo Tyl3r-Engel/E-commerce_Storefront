@@ -6,8 +6,8 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "start": "nodemon server/index.js",
-    "react-dev": "webpack --config ./webpack.config.js  -w"
+    "react-dev": "webpack --config ./webpack.config.js  -w",
+    "express-dev": "nodemon ./server/index.js "
   },
   "devDependencies": {
     "eslint": "^8.8.0",
