@@ -107,6 +107,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _Context__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Context */ "./client/src/Context.js");
 /* harmony import */ var _Context__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_Context__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _Questions_And_Answers_Questions_jsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Questions And Answers/Questions.jsx */ "./client/src/Questions And Answers/Questions.jsx");
+
 
 
 
@@ -159,7 +161,7 @@ function App() {
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](_Context__WEBPACK_IMPORTED_MODULE_5__["AppContext"].Provider, {
     value: currentProduct
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"]("h1", null, JSON.stringify(currentProduct)));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"]("h1", null, "Overview"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"]("h1", null, "Related Items & Comparison"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"]("h1", null, "Questions & Answers"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](_Questions_And_Answers_Questions_jsx__WEBPACK_IMPORTED_MODULE_6__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"]("h1", null, "Ratings & Reviews"));
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -176,9 +178,339 @@ function App() {
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var AppContext = React.createContext();
+var QuestionsContext = React.createContext();
 module.exports = {
-  AppContext: AppContext
+  AppContext: AppContext,
+  QuestionsContext: QuestionsContext
 };
+
+/***/ }),
+
+/***/ "./client/src/Questions And Answers/Questions.jsx":
+/*!********************************************************!*\
+  !*** ./client/src/Questions And Answers/Questions.jsx ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _QuestionsList_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./QuestionsList.jsx */ "./client/src/Questions And Answers/QuestionsList.jsx");
+/* harmony import */ var _QuestionsSearch_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./QuestionsSearch.jsx */ "./client/src/Questions And Answers/QuestionsSearch.jsx");
+ // eslint-disable-next-line import/extensions
+
+ // eslint-disable-next-line import/extensions
+
+ // import QuestionsListItem from './QuestionsListItem.jsx';
+
+function Questions() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_QuestionsSearch_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_QuestionsList_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], null));
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Questions);
+
+/***/ }),
+
+/***/ "./client/src/Questions And Answers/QuestionsList.jsx":
+/*!************************************************************!*\
+  !*** ./client/src/Questions And Answers/QuestionsList.jsx ***!
+  \************************************************************/
+/*! exports provided: QuestionsContext, QuestionsUpdateContext, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "QuestionsContext", function() { return QuestionsContext; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "QuestionsUpdateContext", function() { return QuestionsUpdateContext; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return QuestionsList; });
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _QuestionsListItem_jsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./QuestionsListItem.jsx */ "./client/src/Questions And Answers/QuestionsListItem.jsx");
+
+
+
+
+
+ // import { QuestionsContext } from '../Context.js';
+// eslint-disable-next-line import/extensions
+
+
+var QuestionsContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createContext"]();
+var QuestionsUpdateContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createContext"](); // store current helpfulness and when it changes implement a useeffect to update the list
+
+function QuestionsList() {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])({}),
+      _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_useState, 2),
+      questions = _useState2[0],
+      setQuestions = _useState2[1];
+
+  function getQuestions() {
+    return _getQuestions.apply(this, arguments);
+  }
+
+  function _getQuestions() {
+    _getQuestions = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee() {
+      var _yield$axios$get, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_4___default.a.get('/api/qa/questions?product_id=44392');
+
+            case 2:
+              _yield$axios$get = _context.sent;
+              data = _yield$axios$get.data;
+              setQuestions({
+                data: data
+              });
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+    return _getQuestions.apply(this, arguments);
+  }
+
+  if (Object.keys(questions).length === 0) {
+    getQuestions();
+    return null;
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](QuestionsContext.Provider, {
+    value: [questions, setQuestions]
+  }, questions.data.results.map(function (question) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__["createElement"](_QuestionsListItem_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      key: question.question_id,
+      question: question
+    });
+  }));
+}
+
+/***/ }),
+
+/***/ "./client/src/Questions And Answers/QuestionsListItem.jsx":
+/*!****************************************************************!*\
+  !*** ./client/src/Questions And Answers/QuestionsListItem.jsx ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return QuestionsListItem; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _QuestionsListItemAnswers_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./QuestionsListItemAnswers.jsx */ "./client/src/Questions And Answers/QuestionsListItemAnswers.jsx");
+ // eslint-disable-next-line import/extensions
+
+
+function QuestionsListItem(props) {
+  var question = props.question;
+  var unsortedAnswers = Object.values(question.answers);
+  var sortedAnswers = [];
+
+  for (var i = 0; i < unsortedAnswers.length; i += 1) {
+    if (unsortedAnswers[i].answerer_name.toLowerCase() === 'seller') {
+      sortedAnswers.push(unsortedAnswers[i]);
+      unsortedAnswers.splice(i, 1);
+    }
+  }
+
+  for (var j = 0; j < unsortedAnswers.length; j += 1) {
+    sortedAnswers.push(unsortedAnswers[j]);
+  }
+
+  var answer = sortedAnswers.map(function (a) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_QuestionsListItemAnswers_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      answer: a
+    });
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "question"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+    className: "questionBody"
+  }, "Q:", ' ', question.question_body), answer);
+}
+
+/***/ }),
+
+/***/ "./client/src/Questions And Answers/QuestionsListItemAnswers.jsx":
+/*!***********************************************************************!*\
+  !*** ./client/src/Questions And Answers/QuestionsListItemAnswers.jsx ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return QuestionsListItemAnswers; });
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
+/* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _date__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./date */ "./client/src/Questions And Answers/date.js");
+/* harmony import */ var _QuestionsList_jsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./QuestionsList.jsx */ "./client/src/Questions And Answers/QuestionsList.jsx");
+
+
+
+
+
+
+
+function QuestionsListItemAnswers(props) {
+  var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_3__["useContext"])(_QuestionsList_jsx__WEBPACK_IMPORTED_MODULE_6__["QuestionsContext"]),
+      _useContext2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_useContext, 2),
+      questions = _useContext2[0],
+      setQuestions = _useContext2[1]; // const { getQuestions } = useContext(QuestionsUpdateContext);
+
+
+  var clicked = false;
+
+  function getQuestions() {
+    return _getQuestions.apply(this, arguments);
+  }
+
+  function _getQuestions() {
+    _getQuestions = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee() {
+      var _yield$axios$get, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_4___default.a.get('/api/qa/questions?product_id=44392');
+
+            case 2:
+              _yield$axios$get = _context.sent;
+              data = _yield$axios$get.data;
+              console.log(data);
+              setQuestions({
+                data: data
+              });
+
+            case 6:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+    return _getQuestions.apply(this, arguments);
+  }
+
+  function incrementHelpful() {
+    return _incrementHelpful.apply(this, arguments);
+  } // useEffect(() => {
+  //   if (clicked) {
+  //     console.log(clicked);
+  //     console.log('render');
+  //   }
+  // }, [clicked]);
+
+
+  function _incrementHelpful() {
+    _incrementHelpful = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee2() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              if (clicked) {
+                _context2.next = 6;
+                break;
+              }
+
+              clicked = true;
+              console.log(clicked);
+              _context2.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_4___default.a.put("/api/qa/answers/".concat(props.answer.id, "/helpful"));
+
+            case 5:
+              getQuestions();
+
+            case 6:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+    return _incrementHelpful.apply(this, arguments);
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("h4", {
+    className: "answerBody"
+  }, "A:", ' ', props.answer.body), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("p", {
+    className: "answerInfo"
+  }, "Answered by", ' ', props.answer.answerer_name, ",", ' ', Object(_date__WEBPACK_IMPORTED_MODULE_5__["default"])(props.answer.date), ' ', "|  Helpful?", ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
+    type: "button",
+    onClick: incrementHelpful
+  }, "yes"), ' ', "(", props.answer.helpfulness, ")  |", ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
+    type: "button"
+  }, "Report")));
+}
+
+/***/ }),
+
+/***/ "./client/src/Questions And Answers/QuestionsSearch.jsx":
+/*!**************************************************************!*\
+  !*** ./client/src/Questions And Answers/QuestionsSearch.jsx ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return QuestionsSearch; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+function QuestionsSearch() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Search"));
+}
+
+/***/ }),
+
+/***/ "./client/src/Questions And Answers/date.js":
+/*!**************************************************!*\
+  !*** ./client/src/Questions And Answers/date.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return date; });
+function date(time) {
+  var timestamp = new Date(time);
+  var d = JSON.stringify(timestamp.getDate());
+  var i = timestamp.getMonth();
+  var y = JSON.stringify(timestamp.getFullYear());
+  var m = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  var stringDate = "".concat(m[i], ", ").concat(d, ", ").concat(y);
+  return stringDate;
+}
 
 /***/ }),
 
