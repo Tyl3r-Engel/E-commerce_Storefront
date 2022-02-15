@@ -8,16 +8,22 @@ app.use('/product', express.static(path.join(__dirname, '../client/dist/')));
 app.use(express.urlencoded({ extended: true }));
 
 app.all('/api/*', async (req, res, next) => {
+  const queryParams = JSON.stringify(req.query)
+    .replaceAll(':', '=')
+    .replaceAll(',', '&')
+    .replaceAll('"', '')
+    .replaceAll('{', '')
+    .replaceAll('}', '');
   const config = {
-    url: `${API_ROUTE}${req.params['0']}`,
+    url: `${API_ROUTE}${req.params['0']}?${queryParams}`,
     method: `${req.method}`,
     data: `${req.body}`,
     headers: {
       Authorization: API_KEY,
     },
   };
-  const responseData = await axios(config);
-  res.json(responseData.data);
+  const { data } = await axios(config);
+  res.json(data);
   res.end();
   next();
 });
