@@ -184,6 +184,77 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./client/src/components/RatingsAndReviews/ImageModal.jsx":
+/*!****************************************************************!*\
+  !*** ./client/src/components/RatingsAndReviews/ImageModal.jsx ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ImageModal; });
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/slicedToArray */ "./node_modules/@babel/runtime/helpers/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+/* eslint-disable react/jsx-no-useless-fragment */
+
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+
+function ImageModal(input) {
+  var photo = input.photo;
+  var id = photo.id,
+      url = photo.url;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState2 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_0___default()(_useState, 2),
+      isClicked = _useState2[0],
+      setIsClicked = _useState2[1];
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, isClicked ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: "modal-container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
+    className: "image",
+    key: id,
+    src: url,
+    onClick: function onClick() {
+      return setIsClicked(function (prev) {
+        return !prev;
+      });
+    },
+    alt: "n/a"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+    className: "imageButton",
+    type: "button",
+    onClick: function onClick() {
+      return setIsClicked(function (prev) {
+        return !prev;
+      });
+    }
+  }, "close")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
+    key: id,
+    src: url,
+    onClick: function onClick() {
+      return setIsClicked(function (prev) {
+        return !prev;
+      });
+    },
+    alt: "n/a",
+    width: "50",
+    height: "50",
+    style: {
+      padding: '3px'
+    }
+  }));
+}
+
+/***/ }),
+
 /***/ "./client/src/components/RatingsAndReviews/RatingsAndReviews.jsx":
 /*!***********************************************************************!*\
   !*** ./client/src/components/RatingsAndReviews/RatingsAndReviews.jsx ***!
@@ -232,12 +303,17 @@ function RatingsAndReviews() {
       listLength = _useState4[0],
       setListLength = _useState4[1];
 
-  function getCurrentReviews(_x, _x2) {
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_4__["useState"])('relevant'),
+      _useState6 = _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default()(_useState5, 2),
+      sortType = _useState6[0],
+      setSortType = _useState6[1];
+
+  function getCurrentReviews() {
     return _getCurrentReviews.apply(this, arguments);
   }
 
   function _getCurrentReviews() {
-    _getCurrentReviews = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee(sortType, count) {
+    _getCurrentReviews = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_0___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.mark(function _callee() {
       var _yield$axios$get, data;
 
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_2___default.a.wrap(function _callee$(_context) {
@@ -245,7 +321,7 @@ function RatingsAndReviews() {
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("/api/reviews/?product_id=".concat(context.id, "&sort=").concat(sortType, "&count=").concat(count));
+              return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("/api/reviews/?product_id=".concat(context.id, "&sort=").concat(sortType, "&count=", 500));
 
             case 2:
               _yield$axios$get = _context.sent;
@@ -264,9 +340,10 @@ function RatingsAndReviews() {
 
   Object(react__WEBPACK_IMPORTED_MODULE_4__["useEffect"])(function () {
     if (context !== null && context !== void 0 && context.id) {
-      getCurrentReviews('newest', 10);
+      getCurrentReviews();
+      setListLength(2);
     }
-  }, [context]);
+  }, [context, sortType]);
 
   function addMoreReviews() {
     setListLength(function (preListLength) {
@@ -282,11 +359,22 @@ function RatingsAndReviews() {
     }));
   }
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_4___default.a.Fragment, null, currentReviews.length !== 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("div", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_4___default.a.Fragment, null, currentReviews.length !== 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_4___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("span", null, "".concat(currentReviews.length, " reviews, sorted by "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("form", {
     style: {
-      overflow: 'auto',
-      maxHeight: 200
+      display: 'inline'
     }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("select", {
+    onChange: function onChange(event) {
+      return setSortType(event.target.value);
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("option", {
+    value: "relevant"
+  }, "Relevant"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("option", {
+    value: "newest"
+  }, "Newest"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("option", {
+    value: "helpful"
+  }, "Helpful")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("div", {
+    className: "reviewList"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(react_list__WEBPACK_IMPORTED_MODULE_5___default.a // eslint-disable-next-line react/jsx-no-bind
   , {
     itemRenderer: renderItem,
@@ -295,7 +383,9 @@ function RatingsAndReviews() {
   })), listLength < currentReviews.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("button", {
     type: "button",
     onClick: addMoreReviews
-  }, "More Reviews"));
+  }, "More Reviews")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("button", {
+    type: "button"
+  }, "Add A Review"));
 }
 
 /***/ }),
@@ -312,6 +402,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Review; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _ImageModal_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ImageModal.jsx */ "./client/src/components/RatingsAndReviews/ImageModal.jsx");
+/* eslint-disable import/extensions */
+
+/* eslint-disable camelcase */
+
 
 function Review(input) {
   var review = input.review;
@@ -325,7 +420,38 @@ function Review(input) {
       reviewer_name = review.reviewer_name,
       helpfulness = review.helpfulness,
       photos = review.photos;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, rating), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "".concat(reviewer_name, ",").concat(new Date(date))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, summary), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, body), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, helpfulness), recommend && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, recommend), response && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, response));
+
+  var formatDate = function formatDate(inputDate) {
+    var year = inputDate.getFullYear();
+    var month = (1 + inputDate.getMonth()).toString();
+    month = month.length > 1 ? month : "0".concat(month);
+    var day = inputDate.getDate().toString();
+    day = day.length > 1 ? day : "0".concat(day);
+    return "".concat(month, "/").concat(day, "/").concat(year);
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "review-container",
+    key: review_id
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "review rating"
+  }, rating), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "review reviewerName"
+  }, "".concat(reviewer_name, ",").concat(formatDate(new Date(date)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "review summary"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, summary)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "review body"
+  }, body, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), photos.length > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, photos.map(function (photo) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ImageModal_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      photo: photo
+    });
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "review helpfulness"
+  }, helpfulness), recommend && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "review recommend"
+  }, "I recommend this product\u2713"), response && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "review response"
+  }, response), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null));
 }
 
 /***/ }),
