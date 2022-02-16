@@ -3,7 +3,9 @@ import React from 'react';
 export default function QuestionsSearch() {
   return (
     <div>
-      <h2>Search</h2>
+      <form>
+        <input type="text" placeholder="Search Questions..." />
+      </form>
     </div>
   );
 }

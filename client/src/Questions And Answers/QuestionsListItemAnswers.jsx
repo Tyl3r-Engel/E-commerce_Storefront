@@ -1,33 +1,37 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
+import getQuestions from './getQuestions.jsx';
+import { QuestionsContext } from './QuestionsList.jsx';
 import date from './date';
-import { QuestionsContext, QuestionsUpdateContext } from './QuestionsList.jsx';
 
 export default function QuestionsListItemAnswers(props) {
   const [questions, setQuestions] = useContext(QuestionsContext);
-  // const { getQuestions } = useContext(QuestionsUpdateContext);
-  let clicked = false;
-  async function getQuestions() {
-    const { data } = await axios.get('/api/qa/questions?product_id=44392');
-    console.log(data);
-    setQuestions({ data });
-  }
-  async function incrementHelpful() {
-    if (!clicked) {
-      clicked = true;
-      console.log(clicked);
+  const [clickedHelpful, setClickedHelpful] = useState(false);
+  const [clickedReport, setClickedReport] = useState(false);
+
+  async function incrementHelpfulness() {
+    if (!clickedHelpful) {
+      setClickedHelpful(true);
       await axios.put(`/api/qa/answers/${props.answer.id}/helpful`);
-      getQuestions();
+      await getQuestions((data) => {
+        setQuestions(data);
+      });
     }
   }
 
-  // useEffect(() => {
-  //   if (clicked) {
-  //     console.log(clicked);
-  //     console.log('render');
-  //   }
-  // }, [clicked]);
+  function setReported(event) {
+    if (!clickedReport) {
+      setClickedReport(true);
+      event.target.innerText = 'Reported';
+    }
+  }
 
+  function userName(name) {
+    if (name.toLowerCase() === 'seller') {
+      return <text style={{ fontWeight: 'bold' }}>{name}</text>;
+    }
+    return <text>{name}</text>;
+  }
   return (
     <div>
       <h4 className="answerBody">
@@ -39,20 +43,20 @@ export default function QuestionsListItemAnswers(props) {
       <p className="answerInfo">
         Answered by
         {' '}
-        {props.answer.answerer_name}
+        {userName(props.answer.answerer_name)}
         ,
         {' '}
         {date(props.answer.date)}
         {' '}
         |  Helpful?
         {' '}
-        <button type="button" onClick={incrementHelpful}>yes</button>
+        <button type="button" onClick={incrementHelpfulness} style={{ textDecorationLine: 'underline' }}>Yes</button>
         {' '}
         (
         {props.answer.helpfulness}
         )  |
         {' '}
-        <button type="button">Report</button>
+        <button type="button" onClick={setReported}>Report</button>
       </p>
     </div>
   );
