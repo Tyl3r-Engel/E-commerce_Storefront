@@ -3,8 +3,6 @@
 .carousel {
   position: relative;
   height: 44vh;
-  display: grid;
-  grid-template-columns: auto auto auto auto auto;
   justify-items: center;
   align-items: center;
   margin: 1em 0 1em 0;
@@ -19,8 +17,7 @@
   height: 44vh;
   display: grid;
   grid-auto-flow: column;
-  justify-content: left;
-  align-items: center;
+  justify-content: space-around;
   overflow-x: hidden;
 }
 
@@ -45,7 +42,8 @@
 }
 
 .card-item.text {
-  margin: 6px 12px 8px 12px;
+  margin: 3px;
+  text-align: center;
 }
 
 .card-item.text.name {
