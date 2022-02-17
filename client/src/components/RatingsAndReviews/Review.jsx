@@ -1,20 +1,20 @@
 /* eslint-disable import/extensions */
 /* eslint-disable camelcase */
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import StarRating from 'react-ratings-declarative';
 import axios from 'axios';
 import ImageModal from './ImageModal.jsx';
-import { AppContext } from '../../Context';
 
 export default function Review(input) {
-  const { review } = input;
+  const {
+    review, sortType, getCurrentReviews,
+  } = input;
   const {
     review_id, rating, summary,
     recommend, response, body,
     date, reviewer_name, helpfulness, photos,
   } = review;
-  const [hasVoted, setHasVoted] = useState({ state: false, option: '' });
-  const context = useContext(AppContext);
+  const [hasVoted, setHasVoted] = useState(false);
 
   const formatDate = (inputDate) => {
     const year = inputDate.getFullYear();
@@ -29,11 +29,11 @@ export default function Review(input) {
   };
 
   const createBody = (rawBody) => {
-    if (rawBody.length < 100) {
+    if (rawBody.length < 250) {
       return rawBody;
     }
-    const showBody = rawBody.substring(0, 100);
-    const moreBody = rawBody.substring(100);
+    const showBody = rawBody.substring(0, 250);
+    const moreBody = rawBody.substring(250);
     let showMoreRef;
     let showMoreButtonRef;
 
@@ -67,21 +67,18 @@ export default function Review(input) {
     );
   };
 
-  const helpfulSubmit = (change) => {
+  useEffect(() => {
+    setHasVoted(false);
+  }, [sortType]);
+
+  const helpfulSubmit = async (change) => {
     if (!change) {
-      setHasVoted({ state: true, option: 'NO' });
+      setHasVoted(true);
       return;
     }
-
-    async function wasHelpful() {
-      const config = {
-        url: `/api/reviews/${context.id}/helpful`,
-        method: 'PUT',
-      };
-      await axios(config);
-      setHasVoted({ state: true, option: 'YES' });
-    }
-    wasHelpful();
+    await axios.put(`/api/reviews/${review_id}/helpful`);
+    getCurrentReviews();
+    setHasVoted(true);
   };
 
   return (
@@ -127,26 +124,19 @@ export default function Review(input) {
       </div>
       )}
 
-      {!hasVoted.state
+      {!hasVoted
         ? (
           <div className="review helpfulness">
             <p style={{ display: 'inline' }}>Was this review helpful?</p>
-            <button type="button" style={{ display: 'inline' }} onClick={() => { helpfulSubmit(true); }}>YES</button>
+            <button type="button" style={{ display: 'inline' }} onClick={() => helpfulSubmit(true)}>YES</button>
             <div style={{ display: 'inline' }}>{`(${helpfulness})`}</div>
             <button type="button" style={{ display: 'inline' }} onClick={() => helpfulSubmit(false)}>NO</button>
           </div>
         ) : (
           <div className="review helpfulness">
-            {hasVoted.option === 'YES'
-              ? (
-                <p style={{ display: 'inline' }}>
-                  {`Was this review helpful? ${parseInt(helpfulness, 10) + 1}`}
-                </p>
-              ) : (
-                <p style={{ display: 'inline' }}>
-                  {`Was this review helpful? ${parseInt(helpfulness, 10)}`}
-                </p>
-              )}
+            <p style={{ display: 'inline' }}>
+              {`Was this review helpful? ${helpfulness}`}
+            </p>
           </div>
         )}
 

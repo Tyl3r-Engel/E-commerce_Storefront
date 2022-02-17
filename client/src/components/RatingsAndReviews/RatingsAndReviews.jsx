@@ -9,13 +9,10 @@ export default function RatingsAndReviews() {
   const context = useContext(AppContext);
   const [currentReviews, setCurrentReviews] = useState([]);
   const [listLength, setListLength] = useState(2);
-  // use a useref to implement line 16 because the helpful
-  // or not transfers to the corresponding position in a different sort
   const [sortType, setSortType] = useState('relevant');
 
   async function getCurrentReviews() {
     const { data } = await axios.get(`/api/reviews/?product_id=${context.id}&sort=${sortType}&count=${500}`);
-    // setCurrentReviews([]);
     setCurrentReviews(data.results);
   }
 
@@ -27,12 +24,21 @@ export default function RatingsAndReviews() {
   }, [context, sortType]);
 
   function addMoreReviews() {
+    if (listLength + 2 > currentReviews.length) {
+      setListLength((preListLength) => preListLength + 1);
+      return;
+    }
     setListLength((preListLength) => preListLength + 2);
   }
 
   const renderItem = (index, key) => (
     <div key={key}>
-      <Review review={currentReviews[index]} />
+      <Review
+        review={currentReviews[index]}
+        sortType={sortType}
+        // eslint-disable-next-line react/jsx-no-bind
+        getCurrentReviews={getCurrentReviews}
+      />
     </div>
   );
 
