@@ -9,15 +9,15 @@ app.use(express.urlencoded({ extended: true }));
 
 app.all('/api/*', async (req, res, next) => {
   const config = {
-    url: `${API_ROUTE}${req.params['0']}`,
+    url: `${API_ROUTE}${req.url.slice(5, req.url.length)}`,
     method: `${req.method}`,
     data: `${req.body}`,
     headers: {
       Authorization: API_KEY,
     },
   };
-  const responseData = await axios(config);
-  res.json(responseData.data);
+  const { data } = await axios(config);
+  res.json(data);
   res.end();
   next();
 });
