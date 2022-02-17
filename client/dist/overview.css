@@ -1,0 +1,61 @@
+.category {
+  grid-area: category;
+  color: darkslategray;
+  font-family: Helvetica;
+  font-size: 20px;
+  font-weight: 700
+}
+.name {
+  grid-area: name;
+  color: darkslategray;
+  font-family: Helvetica;
+  font-size: 24px;
+  font-weight: 900
+}
+.price {
+  grid-area: price;
+  color: darkslategray;
+  font-family: Helvetica;
+  font-size: 14px;
+  font-weight: 400
+}
+.slogan {
+  grid-area: slogan;
+  color: darkslategray;
+  font-family: Helvetica;
+  font-size: 18px;
+  font-weight: 700
+}
+.description {
+  grid-area: description;
+  color: darkslategray;
+  font-family: Helvetica;
+  font-size: 14px;
+  font-weight: 350
+}
+.mainImage {
+  position: relative;
+  width: 250px;
+  height: auto;
+
+}
+.image-container {
+  grid-area: mainImage;
+  width: 100%;
+  position: relative;
+}
+.mainDiv {
+  justify-content: center;
+  margin-top: 2%;
+  margin-bottom: 5%;
+  display: grid;
+  grid-template-columns: 300px 150px;
+  /* grid-template-rows: 1fr 1fr 1fr 1fr; */
+  gap: 1.2vw;
+  grid-template-areas:
+    'mainImage category'
+    'mainImage name'
+    'mainImage price'
+    'slogan slogan'
+    'description description'
+}
