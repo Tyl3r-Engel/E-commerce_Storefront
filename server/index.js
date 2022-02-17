@@ -4,22 +4,32 @@ const path = require('path');
 const { API_ROUTE, API_KEY } = require('./config');
 
 const app = express();
-app.use('/product', express.static(path.join(__dirname, '../client/dist/')));
+app.use(express.static(path.join(__dirname, '../client/dist/')));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.all('/api/*', async (req, res, next) => {
-  const config = {
-    url: `${API_ROUTE}${req.url.slice(5, req.url.length)}`,
-    method: `${req.method}`,
-    data: `${req.body}`,
-    headers: {
-      Authorization: API_KEY,
-    },
-  };
-  const { data } = await axios(config);
-  res.json(data);
-  res.end();
-  next();
+  try {
+    const config = {
+      url: `${API_ROUTE}${req.url.slice(5, req.url.length)}`,
+      method: `${req.method}`,
+      data: req.body,
+      headers: {
+        Authorization: API_KEY,
+      },
+    };
+    const { data } = await axios(config);
+    res.json(data);
+    res.end();
+    next();
+  } catch (error) {
+    res.status(error.status || 500).send({
+      error: {
+        status: error.status || 500,
+        message: error.message || 'Internal Server Error',
+      },
+    });
+  }
 });
 
 app.listen(3000, () => {
