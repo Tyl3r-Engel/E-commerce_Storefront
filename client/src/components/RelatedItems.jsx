@@ -6,16 +6,16 @@ export default function RelatedItems({ products, productId, setProductId }) {
 
   return (
     <div>
-      <h1 style={{color: 'red'}}>Over View</h1>
+      <h1 style={{color: 'red', textAlign: 'center'}}>Over View</h1>
 
-      <h2>Related Items</h2>
+      <h2 style={{textAlign: 'center'}}>Related Items</h2>
       <Carousel 
         related={true}
         products={products}
         productId={productId}
         setProductId={setProductId}  
       />
-      <h2>RelatedItems</h2>
+      <h2 style={{textAlign: 'center'}}>Your Outfit</h2>
       <Carousel 
         related={false}
         products={products}
@@ -23,8 +23,8 @@ export default function RelatedItems({ products, productId, setProductId }) {
         setProductId={setProductId}  
       />
 
-      <h1 style={{color: 'red'}}>Reviews and Ratings</h1>
-      <h1 style={{color: 'red'}}>Questsions and Answers</h1>
+      <h1 style={{color: 'red', textAlign: 'center'}}>Reviews and Ratings</h1>
+      <h1 style={{color: 'red', textAlign: 'center'}}>Questsions and Answers</h1>
     </div>
   )
 }

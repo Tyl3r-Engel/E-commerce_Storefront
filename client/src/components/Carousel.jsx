@@ -9,13 +9,14 @@ export default function Carousel({ products, related, productId, setProductId })
       <div className='cards-container'>
         {products ? 
           products.map((product, index) => {
-           return (<RelatedCard 
-                    key={productId}
-                    related={true}
-                    product={product}
-                    productId={productId}
-                    setProductId={setProductId}  
-                  />) 
+           return (
+            <RelatedCard 
+              key={productId}
+              related={true}
+              product={product}
+              productId={productId}
+              setProductId={setProductId}  
+            />) 
           }) : null}
       </div>
     </section>
