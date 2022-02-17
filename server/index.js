@@ -22,8 +22,12 @@ app.all('/api/*', async (req, res, next) => {
       Authorization: API_KEY,
     },
   };
-  const { data } = await axios(config);
-  res.json(data);
+  try {
+    const { data } = await axios(config);
+    res.json(data);
+  } catch (e) {
+    res.json(e);
+  }
   res.end();
   next();
 });

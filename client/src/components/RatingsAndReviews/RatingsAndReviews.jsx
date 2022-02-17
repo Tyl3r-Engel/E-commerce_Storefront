@@ -9,10 +9,13 @@ export default function RatingsAndReviews() {
   const context = useContext(AppContext);
   const [currentReviews, setCurrentReviews] = useState([]);
   const [listLength, setListLength] = useState(2);
+  // use a useref to implement line 16 because the helpful
+  // or not transfers to the corresponding position in a different sort
   const [sortType, setSortType] = useState('relevant');
 
   async function getCurrentReviews() {
     const { data } = await axios.get(`/api/reviews/?product_id=${context.id}&sort=${sortType}&count=${500}`);
+    // setCurrentReviews([]);
     setCurrentReviews(data.results);
   }
 
@@ -27,19 +30,18 @@ export default function RatingsAndReviews() {
     setListLength((preListLength) => preListLength + 2);
   }
 
-  function renderItem(index, key) {
-    return (
-      <div key={key}>
-        <Review review={currentReviews[index]} />
-      </div>
-    );
-  }
+  const renderItem = (index, key) => (
+    <div key={key}>
+      <Review review={currentReviews[index]} />
+    </div>
+  );
+
   return (
-    <>
+    <div className="ratingsAndReviews-container">
       {currentReviews.length !== 0
       && (
         <>
-          <span>
+          <span className="reviews-sortedBy">
             {`${currentReviews.length} reviews, sorted by `}
             <form style={{ display: 'inline' }}>
               <select onChange={(event) => setSortType(event.target.value)}>
@@ -49,6 +51,7 @@ export default function RatingsAndReviews() {
               </select>
             </form>
           </span>
+
           <div className="reviewList">
             <ReactList
               // eslint-disable-next-line react/jsx-no-bind
@@ -57,11 +60,12 @@ export default function RatingsAndReviews() {
               type="simple"
             />
           </div>
+
           {listLength < currentReviews.length
           && <button type="button" onClick={addMoreReviews}>More Reviews</button>}
         </>
       )}
       <button type="button">Add A Review</button>
-    </>
+    </div>
   );
 }
