@@ -1,2 +1,5 @@
 node_modules
 server/config.js
+bundle.js
+bundle.js.map
+App.jsx
