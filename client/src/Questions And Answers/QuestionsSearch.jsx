@@ -1,6 +1,8 @@
+/* eslint-disable import/extensions */
+/* eslint-disable no-unused-vars */
+/* eslint-disable import/no-cycle */
 import React, { useState, useContext, useEffect } from 'react';
 import { QuestionsContext, SearchContext } from './Questions.jsx';
-import getQuestions from './getQuestions.jsx';
 
 export default function QuestionsSearch() {
   const [questions, setQuestions] = useContext(QuestionsContext);

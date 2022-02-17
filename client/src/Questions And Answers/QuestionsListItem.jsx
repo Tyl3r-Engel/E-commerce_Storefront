@@ -1,3 +1,8 @@
+/* eslint-disable no-return-assign */
+/* eslint-disable react/jsx-no-bind */
+/* eslint-disable react/prop-types */
+/* eslint-disable import/no-cycle */
+/* eslint-disable import/extensions */
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
@@ -9,6 +14,7 @@ import QuestionsListItemAnswers from './QuestionsListItemAnswers.jsx';
 export default function QuestionsListItem(props) {
   const { question } = props;
   const currentProduct = useContext(AppContext);
+  // eslint-disable-next-line no-unused-vars
   const [questions, setQuestions] = useContext(QuestionsContext);
   const [clickedHelpful, setClickedHelpful] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -23,7 +29,6 @@ export default function QuestionsListItem(props) {
   }
 
   function afterOpenModal() {
-    // references are now sync'd and can be accessed.
     subtitle.style.color = '#f00';
   }
 
@@ -31,19 +36,27 @@ export default function QuestionsListItem(props) {
     setModalIsOpen(false);
   }
 
-  function submitModal(event) {
+  async function submitModal(event) {
     event.preventDefault();
+    const photos = [];
+    if (event.target.photos !== undefined) {
+      photos.push(event.target.photos.value);
+    }
     const config = {
-      url: `/api/qa/questions${question.question_id}/answers`,
+      url: `/api/qa/questions/${question.question_id}/answers`,
       method: 'post',
       data: {
         body: JSON.stringify(event.target.question.value),
         name: JSON.stringify(event.target.username.value),
         email: JSON.stringify(event.target.email.value),
-        photos: event.target.photos.value || [],
+        photos,
       },
     };
-    axios(config).then((response) => console.log(response)).catch((err) => console.log(err.body));
+    closeModal();
+    await axios(config);
+    await getQuestions((data) => {
+      setQuestions(data);
+    });
   }
 
   async function incrementHelpfulness() {
@@ -67,12 +80,11 @@ export default function QuestionsListItem(props) {
     sortedAnswers.push(unsortedAnswers[j]);
   }
   const answer = sortedAnswers.slice(0, displayQuantity).map((a) => (
-    <QuestionsListItemAnswers answer={a} />
+    <QuestionsListItemAnswers key={a.id} answer={a} question_id={question.question_id} />
   ));
 
   function moreAnswers() {
     if (Object.keys(question.answers).length > displayQuantity) {
-      console.log('yeet');
       if (Object.keys(question.answers).length >= displayQuantity + 2) {
         setDisplayQuantity((prevDisplayQuantity) => prevDisplayQuantity + 2);
       } else {
@@ -81,6 +93,7 @@ export default function QuestionsListItem(props) {
     }
   }
 
+  // eslint-disable-next-line consistent-return
   function moreAnswersButton() {
     if (Object.keys(question.answers).length > 2) {
       if (Object.keys(question.answers).length <= displayQuantity) {
@@ -122,14 +135,13 @@ export default function QuestionsListItem(props) {
             {' '}
             {question.question_body}
           </h3>
-          {/* <div>I am a modal</div> */}
           <form onSubmit={submitModal}>
             <textarea id="question" rows="4" cols="50" placeholder="Your Answer" maxLength="1000" required />
             <input id="username" type="text" placeholder="Example: jack543!" maxLength="60" required />
             <input id="email" type="text" placeholder="Example: jack@email.com" maxLength="60" required />
             <p>For authentication reasons, you will not be emailed</p>
             <input id="file" type="file" />
-            <button onClick={closeModal}>close</button>
+            <button type="button" onClick={closeModal}>close</button>
             <input type="submit" value="submit" />
           </form>
         </Modal>

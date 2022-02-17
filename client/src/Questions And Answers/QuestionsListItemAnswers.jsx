@@ -1,3 +1,8 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-cycle */
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import getQuestions from './getQuestions.jsx';
@@ -5,6 +10,7 @@ import { QuestionsContext } from './Questions.jsx';
 import date from './date';
 
 export default function QuestionsListItemAnswers(props) {
+  // eslint-disable-next-line no-unused-vars
   const [questions, setQuestions] = useContext(QuestionsContext);
   const [clickedHelpful, setClickedHelpful] = useState(false);
   const [clickedReport, setClickedReport] = useState(false);
@@ -19,10 +25,12 @@ export default function QuestionsListItemAnswers(props) {
     }
   }
 
-  function setReported(event) {
+  async function setReported(event) {
     if (!clickedReport) {
       setClickedReport(true);
       event.target.innerText = 'Reported';
+      await axios.put(`/api/qa/answers/${props.answer.id}/report`);
+      // eslint-disable-next-line no-param-reassign
     }
   }
 

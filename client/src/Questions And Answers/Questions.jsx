@@ -1,3 +1,6 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-cycle */
 import React, { useState } from 'react';
 import getQuestions from './getQuestions.jsx';
 import QuestionsList from './QuestionsList.jsx';

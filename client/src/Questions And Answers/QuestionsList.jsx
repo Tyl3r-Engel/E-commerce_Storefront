@@ -1,3 +1,10 @@
+/* eslint-disable react/jsx-no-bind */
+/* eslint-disable no-return-assign */
+/* eslint-disable no-var */
+/* eslint-disable vars-on-top */
+/* eslint-disable no-unused-vars */
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-cycle */
 import React, { useState, useContext } from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
@@ -30,7 +37,7 @@ export default function QuestionsList() {
     setModalIsOpen(false);
   }
 
-  function submitModal(event) {
+  async function submitModal(event) {
     event.preventDefault();
     const config = {
       url: '/api/qa/questions',
@@ -39,10 +46,12 @@ export default function QuestionsList() {
         body: JSON.stringify(event.target.question.value),
         name: JSON.stringify(event.target.username.value),
         email: JSON.stringify(event.target.email.value),
+        // eslint-disable-next-line radix
         product_id: parseInt(questions.product_id),
       },
     };
-    axios(config).then((response) => console.log(response)).catch((err) => console.log(err.body));
+    closeModal();
+    await axios(config);
   }
 
   function moreQuestions() {
@@ -55,6 +64,7 @@ export default function QuestionsList() {
     }
   }
 
+  // eslint-disable-next-line consistent-return
   function moreQuestionsButton() {
     if (displayMoreQuestions) {
       if (questions.results.length <= displayQuantity) {
@@ -63,14 +73,15 @@ export default function QuestionsList() {
       return <button type="button" onClick={moreQuestions}>More Answered Questions</button>;
     }
   }
-
+  var display;
   if (Object.keys(searchResults).length > 0) {
-    var display = searchResults;
+    display = searchResults;
   } else {
-    var display = questions;
+    display = questions;
   }
 
   return (
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
     <ModalContext.Provider value={[modalIsOpen, setModalIsOpen]}>
       {display.results.slice(0, displayQuantity).map((question) => (
         <QuestionsListItem
@@ -94,13 +105,12 @@ export default function QuestionsList() {
           {' '}
           {currentProduct.data?.name}
         </h3>
-        {/* <div>I am a modal</div> */}
         <form onSubmit={submitModal}>
           <textarea id="question" rows="4" cols="50" placeholder="Your Question" maxLength="1000" required />
           <input id="username" type="text" placeholder="Example: jackson11!." maxLength="60" required />
           <input id="email" type="text" placeholder="Example: jackson@email.com" maxLength="60" required />
           <p>For authentication reasons, you will not be emailed</p>
-          <button onClick={closeModal}>close</button>
+          <button type="button" onClick={closeModal}>close</button>
           <input type="submit" value="submit" />
         </form>
       </Modal>
