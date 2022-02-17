@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import getQuestions from './getQuestions.jsx';
-import { QuestionsContext } from './QuestionsList.jsx';
+import { QuestionsContext } from './Questions.jsx';
 import date from './date';
 
 export default function QuestionsListItemAnswers(props) {

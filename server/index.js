@@ -6,6 +6,7 @@ const { API_ROUTE, API_KEY } = require('./config');
 const app = express();
 app.use(express.static(path.join(__dirname, '../client/dist/')));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.all('/api/*', async (req, res, next) => {
   const config = {
