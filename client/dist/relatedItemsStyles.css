@@ -1,0 +1,63 @@
+
+/* Carousel */
+.carousel {
+  position: relative;
+  height: 44vh;
+  justify-items: center;
+  align-items: center;
+  margin: 1em 0 1em 0;
+  overflow-x: hidden;
+}
+
+
+/* Item Cards */
+.cards-container {
+  position: relative;
+  width: 100%;
+  height: 44vh;
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: space-around;
+  overflow-x: hidden;
+}
+
+.card-container {
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr;
+  width: 16vw;
+  height: 40vh;
+  margin-right: 1em;
+  cursor: pointer;
+}
+
+.card-inner-container {
+  position: relative;
+  display: grid;
+  grid-template-rows: 5fr 1fr 1fr 1fr 1fr;
+  width: 16vw;
+  height: 40vh;
+  box-shadow: 3px 2px 2px grey;
+  border: 1px solid;
+}
+
+.card-item.text {
+  margin: 3px;
+  text-align: center;
+}
+
+.card-item.text.name {
+  font-weight: bold;
+}
+
+.card-item.text.rating {
+  padding: 10px;
+}
+
+.card-image {
+  width: 100%;
+  height: 22vh;
+  object-fit: cover;
+}
+
+/* Modal */
