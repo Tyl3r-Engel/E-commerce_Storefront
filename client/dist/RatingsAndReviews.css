@@ -1,0 +1,48 @@
+.reviewList {
+  height: 200px;
+
+  padding-left: 1em;
+
+  border: 2px solid black;
+  border-radius: 5px;
+  border-style: inset;
+
+  /* background-color: coral; */;
+  overflow: scroll;
+}
+
+.modal-button {
+  background: transparent;
+  border: none !important;
+  font-size:0;
+}
+
+.modal-container{
+  top: '50%';
+  left: '50%';
+  right: 'auto';
+  bottom: 'auto';
+  margin-right: '-50%';
+  transform: translate(-50% -50%);
+}
+
+.modal-container .image{
+  position: relative;
+  margin: auto;
+  display: block;
+}
+
+.modal-container .imageButton{
+position: fixed;
+bottom:4em;
+right:4em;
+background-color:#8F0005;
+border-radius:1.5em;
+color:white;
+text-transform:uppercase;
+padding:1em 1.5em;
+}
+
+.review-container {
+  display: grid;
+}
