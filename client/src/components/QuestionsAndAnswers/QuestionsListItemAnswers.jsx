@@ -36,9 +36,9 @@ export default function QuestionsListItemAnswers(props) {
 
   function userName(name) {
     if (name.toLowerCase() === 'seller') {
-      return <text style={{ fontWeight: 'bold' }}>{name}</text>;
+      return <span style={{ display: 'inline', fontWeight: 'bold' }}>{name}</span>;
     }
-    return <text>{name}</text>;
+    return <span style={{ display: 'inline' }}>{name}</span>;
   }
   return (
     <div>

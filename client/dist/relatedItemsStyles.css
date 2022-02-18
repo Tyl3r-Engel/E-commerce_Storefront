@@ -33,8 +33,6 @@
 
 .card-inner-container {
   position: relative;
-  display: grid;
-  grid-template-rows: 5fr 1fr 1fr 1fr 1fr;
   width: 16vw;
   height: 40vh;
   box-shadow: 3px 2px 2px grey;
