@@ -6,7 +6,7 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
-import { AppContext } from '../Context.js';
+import { AppContext } from '../../Context.js';
 import { QuestionsContext } from './Questions.jsx';
 import getQuestions from './getQuestions.jsx';
 import QuestionsListItemAnswers from './QuestionsListItemAnswers.jsx';

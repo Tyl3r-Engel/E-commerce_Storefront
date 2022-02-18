@@ -8,7 +8,8 @@
 import React, { useState, useContext } from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
-import { AppContext } from '../Context.js';
+import ReactList from 'react-list';
+import { AppContext } from '../../Context.js';
 import { QuestionsContext, SearchContext } from './Questions.jsx';
 import QuestionsListItem from './QuestionsListItem.jsx';
 
@@ -80,15 +81,44 @@ export default function QuestionsList() {
     display = questions;
   }
 
+  // const renderItem = (index, key) => (
+  //   <div key={key}>
+  //     <Review
+  //       review={currentReviews[index]}
+  //       sortType={sortType}
+  //       // eslint-disable-next-line react/jsx-no-bind
+  //       getCurrentReviews={getCurrentReviews}
+  //     />
+  //   </div>
+  // );
+
+  // {display.results.slice(0, displayQuantity).map((question) => (
+  //   <QuestionsListItem
+  //     key={question.question_id}
+  //     question={question}
+  //   />
+
+  const renderer = (index, key) => (
+    <div key={key}>
+      <QuestionsListItem
+        question={display.results[index]}
+      />
+    </div>
+  );
+
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
     <ModalContext.Provider value={[modalIsOpen, setModalIsOpen]}>
-      {display.results.slice(0, displayQuantity).map((question) => (
-        <QuestionsListItem
-          key={question.question_id}
-          question={question}
+      <div className="questionList">
+        <ReactList
+          // eslint-disable-next-line react/jsx-no-bind
+          itemRenderer={renderer}
+          length={displayQuantity}
+          type="simple"
         />
-      ))}
+      </div>
+      {/* {display.results.slice(0, displayQuantity).map((question) => (
+      ))} */}
       {moreQuestionsButton()}
       <button type="button" onClick={openModal}>Add A Question +</button>
       <Modal

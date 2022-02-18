@@ -9,6 +9,19 @@
   background-color: papayawhip;
 }
 
+.questionList {
+  height: 500px;
+
+  padding-left: 1em;
+
+  border: 2px solid black;
+  border-radius: 5px;
+  border-style: inset;
+
+  /* background-color: coral; */;
+  overflow: scroll;
+}
+
 .Overlay {
   position: fixed;
   top: 0;
