@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 import * as React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
@@ -29,14 +30,14 @@ function App() {
 
   return (
     <AppContext.Provider value={currentProduct}>
-      <Overview />
+      {/* <Overview />
       <RelatedItems
         products={currentProducts.data}
         setProduct={setCurrentProduct}
         productId={productId}
         setProductId={setProductId}
       />
-      <Questions />
+      <Questions /> */}
       <RatingsAndReviews />
     </AppContext.Provider>
   );

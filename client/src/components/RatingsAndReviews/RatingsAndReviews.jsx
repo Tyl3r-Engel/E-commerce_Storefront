@@ -2,7 +2,8 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import ReactList from 'react-list';
-import { AppContext } from '../../Context';
+import { AppContext, RatingsContext } from '../../Context';
+import Ratings from './Ratings.jsx';
 import Review from './Review.jsx';
 
 export default function RatingsAndReviews() {
@@ -10,38 +11,49 @@ export default function RatingsAndReviews() {
   const [currentReviews, setCurrentReviews] = useState([]);
   const [listLength, setListLength] = useState(2);
   const [sortType, setSortType] = useState('relevant');
+  const [starSort, setStarSort] = useState([]);
 
-  async function getCurrentReviews() {
+  const getCurrentReviews = async () => {
     const { data } = await axios.get(`/api/reviews/?product_id=${context.id}&sort=${sortType}&count=${500}`);
     setCurrentReviews(data.results);
-  }
+  };
+
+  const sortByStars = () => {
+    const sortedByStars = currentReviews
+      .filter((element) => starSort.includes(parseInt(element.rating, 10)));
+    setCurrentReviews(sortedByStars);
+  };
 
   useEffect(() => {
     if (context?.id) {
       getCurrentReviews();
       setListLength(2);
     }
-  }, [context, sortType]);
+  }, [context, sortType, starSort]);
 
-  function addMoreReviews() {
+  const addMoreReviews = () => {
     if (listLength + 2 > currentReviews.length) {
       setListLength((preListLength) => preListLength + 1);
       return;
     }
     setListLength((preListLength) => preListLength + 2);
-  }
+  };
 
   const renderItem = (index, key) => (
     <div key={key}>
       <Review
         review={currentReviews[index]}
         sortType={sortType}
-        // eslint-disable-next-line react/jsx-no-bind
+          // eslint-disable-next-line react/jsx-no-bind
         getCurrentReviews={getCurrentReviews}
       />
     </div>
   );
-
+  if (starSort.length !== 0) {
+    if (!currentReviews.every((element) => starSort.includes(parseInt(element.rating, 10)))) {
+      sortByStars();
+    }
+  }
   return (
     <div className="ratingsAndReviews-container">
       {currentReviews.length !== 0
@@ -72,6 +84,10 @@ export default function RatingsAndReviews() {
         </>
       )}
       <button type="button">Add A Review</button>
+      {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
+      <RatingsContext.Provider value={{ productId: context.id, setStarSort, starSort }}>
+        <Ratings />
+      </RatingsContext.Provider>
     </div>
   );
 }
