@@ -1,6 +1,8 @@
 /* eslint-disable import/extensions */
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  useContext, useEffect, useMemo, useState,
+} from 'react';
 import ReactList from 'react-list';
 import { AppContext, RatingsContext } from '../../Context';
 import Ratings from './Ratings.jsx';
@@ -12,6 +14,7 @@ export default function RatingsAndReviews() {
   const [listLength, setListLength] = useState(2);
   const [sortType, setSortType] = useState('relevant');
   const [starSort, setStarSort] = useState([]);
+  const [characteristicsData, setCharacteristicsData] = useState({});
 
   const getCurrentReviews = async () => {
     const { data } = await axios.get(`/api/reviews/?product_id=${context.id}&sort=${sortType}&count=${500}`);
@@ -49,11 +52,19 @@ export default function RatingsAndReviews() {
       />
     </div>
   );
+
   if (starSort.length !== 0) {
     if (!currentReviews.every((element) => starSort.includes(parseInt(element.rating, 10)))) {
       sortByStars();
     }
   }
+
+  const providerValue = useMemo(() => (
+    {
+      productId: context.id, setStarSort, starSort, setCharacteristicsData,
+    }
+  ), [context.id, setStarSort, starSort, setCharacteristicsData]);
+
   return (
     <div className="ratingsAndReviews-container">
       {currentReviews.length !== 0
@@ -83,9 +94,8 @@ export default function RatingsAndReviews() {
           && <button type="button" onClick={addMoreReviews}>More Reviews</button>}
         </>
       )}
-      <button type="button">Add A Review</button>
-      {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
-      <RatingsContext.Provider value={{ productId: context.id, setStarSort, starSort }}>
+      <button type="button" onClick={() => { JSON.stringify(characteristicsData); }}>Add A Review</button>
+      <RatingsContext.Provider value={providerValue}>
         <Ratings />
       </RatingsContext.Provider>
     </div>

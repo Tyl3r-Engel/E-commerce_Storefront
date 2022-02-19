@@ -4,6 +4,7 @@ import axios from 'axios';
 import { RatingsContext } from '../../Context';
 import AverageRatings from './AverageRating.jsx';
 import BreakDown from './BreakDown.jsx';
+import BreakDownFactors from './BreakDownFactors.jsx';
 
 export default function Ratings() {
   const { productId } = useContext(RatingsContext);
@@ -30,6 +31,23 @@ export default function Ratings() {
           </div>
           <div className="breakDown">
             <BreakDown reviewsMetaData={reviewsMetaData} />
+          </div>
+          <div className="recommendations">
+            <span>
+              {
+                Math.round(10 * (
+                  parseInt(reviewsMetaData.recommended.true, 10)
+                / (parseInt(reviewsMetaData.recommended.true, 10)
+                + parseInt(reviewsMetaData.recommended.false, 10))
+                ) * 10)
+              }
+              % of reviews recommend this product
+            </span>
+          </div>
+          <div className="breakDownFactors">
+            <div>
+              <BreakDownFactors reviewsMetaData={reviewsMetaData} />
+            </div>
           </div>
         </div>
       )}

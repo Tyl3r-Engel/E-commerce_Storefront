@@ -63,3 +63,48 @@ padding:1em 1.5em;
 :hover .progressBars {
   cursor: pointer;
 }
+
+.factorBar-container {
+  display: grid;
+  grid-template-columns: 110px 100px;
+  grid-template-areas:
+  "name name"
+  "bar bar"
+  "worst best"
+  ;
+}
+
+.factorName {
+  grid-area: name;
+  margin: unset;
+}
+
+.factorBar {
+  -webkit-appearance: none;
+  grid-area: bar;
+  display: block;
+  width: 210px;
+  height: 15px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 1;
+}
+
+.worstDec {
+  grid-area: worst;
+  font-size: 10px;
+}
+
+.bestDec {
+  grid-area: best;
+  justify-self: end;
+  font-size: 10px;
+}
+
+.factorBar::-webkit-slider-thumb {
+  appearance: none;
+  height: 15px;
+  width: 15px;
+  background: url(./DownArrow.svg) no-repeat top left;
+  background-size: contain;
+}
