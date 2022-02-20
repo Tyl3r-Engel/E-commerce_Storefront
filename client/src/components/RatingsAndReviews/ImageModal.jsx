@@ -18,11 +18,11 @@ export default function ImageModal(input) {
       </button>
       <ReactModal
         isOpen={modalIsOpen}
-        contentLabel="Example Modal"
+        contentLabel="Image Modal"
       >
         <div className="modal-container">
           <img className="image" src={photo.url} alt="n/a" />
-          <button className="imageButton" type="button" onClick={() => setModalIsOpen(false)}>close</button>
+          <button className="closeButton" type="button" onClick={() => setModalIsOpen(false)}>close</button>
         </div>
       </ReactModal>
     </div>

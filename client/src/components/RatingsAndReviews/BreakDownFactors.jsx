@@ -101,7 +101,7 @@ export default function breakDownFactors(input) {
           disabled
         />
         <p className="worstDec">Runs tight</p>
-        <p className="bestDec">Runs long</p>
+        <p className="bestDec">Runs longe</p>
       </div>
     )}
     </>

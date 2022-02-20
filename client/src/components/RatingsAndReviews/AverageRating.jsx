@@ -13,12 +13,12 @@ export default function AverageRatings(input) {
     }
     numberOfReviews += parseInt(ratingValues[i], 10);
   }
-  const average = (count / numberOfReviews);
+  const average = (Math.round(10 * (count / numberOfReviews)) / 10);
   return (
     <>
       <h1>
         <strong>
-          {Math.round(10 * average) / 10}
+          {average}
         </strong>
       </h1>
 

@@ -7,6 +7,7 @@ import ReactList from 'react-list';
 import { AppContext, RatingsContext } from '../../Context';
 import Ratings from './Ratings.jsx';
 import Review from './Review.jsx';
+import WriteReviewModal from './WriteReviewModal.jsx';
 
 export default function RatingsAndReviews() {
   const context = useContext(AppContext);
@@ -15,6 +16,7 @@ export default function RatingsAndReviews() {
   const [sortType, setSortType] = useState('relevant');
   const [starSort, setStarSort] = useState([]);
   const [characteristicsData, setCharacteristicsData] = useState({});
+  const [newReviewModalOpen, setNewReviewModalOpen] = useState(false);
 
   const getCurrentReviews = async () => {
     const { data } = await axios.get(`/api/reviews/?product_id=${context.id}&sort=${sortType}&count=${500}`);
@@ -67,6 +69,15 @@ export default function RatingsAndReviews() {
 
   return (
     <div className="ratingsAndReviews-container">
+      {newReviewModalOpen
+      && (
+        <WriteReviewModal
+          characteristicsData={characteristicsData}
+          newReviewModalOpen={newReviewModalOpen}
+          setNewReviewModalOpen={setNewReviewModalOpen}
+          productId={context.id}
+        />
+      )}
       {currentReviews.length !== 0
       && (
         <>
@@ -94,7 +105,7 @@ export default function RatingsAndReviews() {
           && <button type="button" onClick={addMoreReviews}>More Reviews</button>}
         </>
       )}
-      <button type="button" onClick={() => { JSON.stringify(characteristicsData); }}>Add A Review</button>
+      <button type="button" onClick={() => { setNewReviewModalOpen(true); }}>Add A Review</button>
       <RatingsContext.Provider value={providerValue}>
         <Ratings />
       </RatingsContext.Provider>

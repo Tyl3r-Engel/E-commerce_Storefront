@@ -32,7 +32,7 @@
   display: block;
 }
 
-.modal-container .imageButton{
+.modal-container .closeButton{
 position: fixed;
 bottom:4em;
 right:4em;
@@ -107,4 +107,58 @@ padding:1em 1.5em;
   width: 15px;
   background: url(./DownArrow.svg) no-repeat top left;
   background-size: contain;
+}
+
+.reviewCharacteristic-container {
+  display: grid;
+  grid-template-columns: repeat(5, 100px);
+  grid-gap: 1em;
+  grid-template-areas:
+  "name current current current current"
+  "button1 button2 button3 button4 button5"
+  "label1 label2 label3 label4 label5";
+  justify-content: center;
+}
+
+.reviewCharacteristic-container .characteristicCat {
+  grid-area: name;
+}
+
+.reviewCharacteristic-container .characteristicCurrentSelect {
+  grid-area: current;
+}
+
+.reviewCharacteristic-container .reviewInput1 {
+  grid-area: button1;
+}
+.reviewCharacteristic-container .reviewLabel1 {
+  grid-area: label1;
+}
+
+.reviewCharacteristic-container .reviewInput2 {
+  grid-area: button2;
+}
+.reviewCharacteristic-container .reviewLabel2 {
+  grid-area: label2;
+}
+
+.reviewCharacteristic-container .reviewInput3 {
+  grid-area: button3;
+}
+.reviewCharacteristic-container .reviewLabel3 {
+  grid-area: label3;
+}
+
+.reviewCharacteristic-container .reviewInput4 {
+  grid-area: button4;
+}
+.reviewCharacteristic-container .reviewLabel4 {
+  grid-area: label4;
+}
+
+.reviewCharacteristic-container .reviewInput5 {
+  grid-area: button5;
+}
+.reviewCharacteristic-container .reviewLabel5 {
+  grid-area: label5;
 }
