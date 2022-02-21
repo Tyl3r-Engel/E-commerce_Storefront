@@ -14,6 +14,7 @@ export default function overview() {
   if (Object.keys(styles).length === 0 && context.id !== undefined) {
     getStyles();
   }
+
   return (
     <div className="mainDiv">
       <div className="image-container">

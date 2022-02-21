@@ -1,28 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
+import { RelatedItemsContext } from '../../Context.js';
 import Carousel from './Carousel.jsx';
 
-export default function RelatedItems({ products, productId, setProductId }) {
-  const [relatedProducts, setRelatedProducts] = useState();
-
-  console.log('products', products);
-
+export default function RelatedItems() {
   return (
     <div>
       <h2 style={{ textAlign: 'center' }}>Related Items</h2>
-      <Carousel
-        related
-        products={products}
-        productId={productId}
-        setProductId={setProductId}
-
-      />
+      <Carousel />
       <h2 style={{ textAlign: 'center' }}>Your Outfit</h2>
-      <Carousel
-        related={false}
-        products={products}
-        productId={productId}
-        setProductId={setProductId}
-      />
+      <Carousel />
     </div>
   );
 }
