@@ -45,6 +45,7 @@ export default function RelatedCard({ product }) {
 
   function openModal() {
     setIsOpen(true);
+    console.log('clicked');
   }
 
   function afterOpenModal() {
@@ -59,18 +60,26 @@ export default function RelatedCard({ product }) {
   return (
     <RelatedItemsContext.Provider>
       <div className="card-container" data-testid={`related-${product.id}`}>
-        {/* <CompareModal /> */}
-        <div className="card-inner-container" onClick={() => openModal()}>
+        <button className="card-inner-container" onClick={() => openModal()}>
           <div className="card-item"><img className="card-image" src={allStyles.results?.[0].photos[0].url} alt="woof" /></div>
           <p className="card-item text category">{product.category.toUpperCase()}</p>
           <p className="card-item text name">{product.name}</p>
           <p className="card-item text price">${product.default_price}</p>
           <p className="card-item text rating"><Rating onClick={handleRating} ratingValue={rating} /></p>
-        </div>
+        </button>
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Comparison Modal"
+        >
+          <h2>Item Comparison</h2>
+          <div>Current Product</div>
+          <div>Characteristics</div>
+          <div>Compared Product</div>
+          <button onClick={closeModal}>close</button>
+        </Modal>
       </div>
     </RelatedItemsContext.Provider>
   );
 }
-
-// if (!products) return 'no data';
-// if (!Array.isArray(products)) return 'not an array';
