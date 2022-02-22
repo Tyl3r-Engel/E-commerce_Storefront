@@ -23,7 +23,8 @@ function Questions() {
   return (
     <QuestionsContext.Provider value={[questions, setQuestions]}>
       <SearchContext.Provider value={[searchResults, setSearchResults]}>
-        <div>
+        <div id="questionsMain">
+          <p className="questionsTitle">Questions & Answers</p>
           <QuestionsSearch />
           <QuestionsList />
         </div>

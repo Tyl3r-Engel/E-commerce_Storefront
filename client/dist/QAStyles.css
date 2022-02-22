@@ -1,25 +1,23 @@
+/* Modal Window Styles */
 .Modal {
   position: absolute;
-  top: 40%;
+  height: auto;
+  width: 400px;
+  text-align: center;
+  top: 20%;
   left: 50%;
   right: auto;
   bottom: auto;
   margin-right: -50%;
   transform: translate(-50%, 50%);
-  background-color: papayawhip;
+  background-color: lightgray;
 }
 
-.questionList {
-  height: 500px;
-
-  padding-left: 1em;
-
-  border: 2px solid black;
-  border-radius: 5px;
-  border-style: inset;
-
-  /* background-color: coral; */;
-  overflow: scroll;
+.picModal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .Overlay {
@@ -28,5 +26,137 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(102, 51, 153, 0.192);
+  background-color: rgba(211, 211, 211, 0.692);
+}
+
+.modalText {
+  margin-bottom: 2px;
+  margin-top: 2px;
+}
+
+/* Component Styles */
+#questionsMain {
+  width: 70%;
+  margin: auto;
+  color: darkslategray;
+  font-family: Helvetica;
+}
+
+.questionsTitle {
+  font-size:xx-large;
+}
+
+.largeFont {
+  font-size: large;
+}
+
+.questionSearch {
+  width: 99.6%;
+  height: 40px;
+  font-size: x-large;
+  margin-bottom: 6px;
+}
+
+.invisibleButton {
+  background: transparent;
+  border: none;
+}
+
+.invisibleButton:hover {
+  cursor: pointer;
+  color:rebeccapurple;
+}
+
+.yesButton {
+  text-decoration: underline;
+}
+
+/* Question Styles */
+.questionList {
+  min-height: 10px;
+  max-height: 600px;
+  padding-left: 1em;
+  overflow-y:scroll;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  border-style:ridge
+}
+
+.questionList::-webkit-scrollbar {
+  display: none;
+}
+
+.questionBody {
+  display: inline;
+  font-size: 175%;
+}
+
+.questionInfo {
+  display: inline;
+}
+
+.bigButtons {
+  font-size: x-large;
+  height: 50px;
+  width: auto;
+  background: transparent;
+}
+
+.bigButtons:hover {
+  cursor: pointer;
+  color:rebeccapurple;
+}
+
+/* Answer Styles */
+.answerList {
+  min-height: 10px;
+  max-height: 350px;
+  padding-left: 1em;
+  overflow-y: scroll;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.answerList::-webkit-scrollbar {
+  display: none;
+}
+
+.answer {
+  padding-left: 10px;
+}
+
+.eachAnswer {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.answerBody {
+  display: inline;
+  font-size: 150%;
+}
+
+.answerInfo {
+  padding-left: 10px;
+  display: inline;
+}
+
+.photoArray {
+  padding-left: 30px;
+}
+.uploadThumbs {
+  margin: auto;
+}
+
+.answerPic {
+  padding-left: 10px;
+}
+
+.thumbnail {
+  object-fit: cover;
+  width: 100px;
+  height: 100px;
+}
+
+.seeMoreAnswers {
+  text-decoration: underline;
+  font-weight: bold;
+  color: darkslategray;
 }

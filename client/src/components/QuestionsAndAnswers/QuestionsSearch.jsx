@@ -9,6 +9,10 @@ export default function QuestionsSearch() {
   const [searchResults, setSearchResults] = useContext(SearchContext);
   const [search, setSearch] = useState('');
 
+  if (Object.keys(questions).length === 0) {
+    return null;
+  }
+
   function searchChange(event) {
     event.preventDefault();
     setSearch(event.target.value);
@@ -34,8 +38,15 @@ export default function QuestionsSearch() {
   }, [search]);
 
   return (
-    <div>
-      <input name="search" type="text" placeholder="Have a question? Search for answers…" value={search} onChange={searchChange} />
+    <div className="questionSearch">
+      <input
+        className="questionSearch"
+        name="search"
+        type="text"
+        placeholder="Have a question? Search for answers…"
+        value={search}
+        onChange={searchChange}
+      />
     </div>
   );
 }
