@@ -9,7 +9,6 @@
   overflow-x: hidden;
 }
 
-
 /* Item Cards */
 .cards-container {
   position: relative;
@@ -22,38 +21,72 @@
 }
 
 .card-container {
+  opacity: 0.9;
   position: relative;
   display: grid;
   grid-template-rows: 1fr;
   width: 16vw;
-  height: 40vh;
+  height: 46vh;
   margin-right: 1em;
   cursor: pointer;
+}
+
+.card-container:hover {
+  opacity: 1;
 }
 
 .card-inner-container {
   position: relative;
   width: 16vw;
-  height: 40vh;
+  height: 46vh;
   box-shadow: 3px 2px 2px grey;
   border: 1px solid;
 }
 
 .card-item.text {
-  margin: 3px;
-  text-align: center;
+  margin: 6px 12px 8px 12px;
+  font: 16px Arial, sans-serif;
 }
 
 .card-item.text.name {
   font-weight: bold;
 }
 
+.card-item.text.price {
+  font-weight: bold;
+  font-size: 15px;
+}
+
 .card-item.text.rating {
-  padding: 10px;
+  margin-top: 0;
+  size: 10px;
+  padding: 8px;
 }
 
 .card-image {
+  padding: 5px;
   width: 100%;
-  height: 22vh;
+  height: 26vh;
   object-fit: cover;
+  cursor: pointer;
+}
+
+.card-image-compared {
+  height: 30vh;
+  width: 28vh;
+}
+
+.card-actionButton {
+  position: absolute;
+  right: 0;
+  padding: 6px;
+  opacity: 0.5;
+  font-size: 25px;
+  background-color: transparent;
+  color: rgb(255, 188, 11);
+  cursor: pointer;
+}
+
+.card-actionButton:hover {
+  opacity: 1;
 }
