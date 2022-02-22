@@ -1,8 +1,8 @@
 /* eslint-disable import/extensions */
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
-import { AppContext } from './Context';
+import { AppContext, RelatedItemsContext } from './Context';
 import Overview from './components/overview/Overview.jsx';
 import RelatedItems from './components/RelatedItems/RelatedItems.jsx';
 import Questions from './components/QuestionsAndAnswers/Questions.jsx';
@@ -20,7 +20,7 @@ function App() {
 
   async function getInitProductArray() {
     const { data } = await axios.get('/api/products');
-    setCurrentProducts({ data });
+    setCurrentProducts(data);
   }
 
   if (Object.keys(currentProduct).length === 0) {
@@ -31,12 +31,9 @@ function App() {
   return (
     <AppContext.Provider value={currentProduct}>
       <Overview />
-      <RelatedItems
-        products={currentProducts.data}
-        setProduct={setCurrentProduct}
-        productId={productId}
-        setProductId={setProductId}
-      />
+      <RelatedItemsContext.Provider value={currentProducts}>
+        <RelatedItems />
+      </RelatedItemsContext.Provider>
       <Questions />
       <RatingsAndReviews />
     </AppContext.Provider>
