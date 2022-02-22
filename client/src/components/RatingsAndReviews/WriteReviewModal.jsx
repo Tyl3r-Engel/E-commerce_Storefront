@@ -1,13 +1,16 @@
 /* eslint-disable import/extensions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import axios from 'axios';
 import React, { useState } from 'react';
 import ReactModal from 'react-modal';
 import StarRating from 'react-ratings-declarative';
 import ImageModal from './ImageModal.jsx';
 
 export default function WriteReviewModal(input) {
-  const { characteristicsData, newReviewModalOpen, setNewReviewModalOpen } = input;
-  const [submitReady, setSubmitReady] = useState(false);
+  const {
+    characteristicsData, newReviewModalOpen, setNewReviewModalOpen, productId,
+  } = input;
+  const [submitError, setSubmitError] = useState(false);
   const [starRating, setStartRating] = useState(0);
   const [recommend, setRecommend] = useState(false);
   const [newReviewCharacteristics, setNewReviewCharacteristics] = useState({});
@@ -17,6 +20,7 @@ export default function WriteReviewModal(input) {
   const [nickName, setNickName] = useState('');
 
   const [photoArray, setPhotoArray] = useState([]);
+  const [photoUrl, setPhotoUrl] = useState('');
   const [email, setEmail] = useState('');
 
   const starInfo = () => {
@@ -149,14 +153,62 @@ export default function WriteReviewModal(input) {
     return `Minimum required characters left: ${50 - reviewBody.length}`;
   };
 
-  const handleSubmit = () => {
-
+  const checkPhoto = (url) => {
+    const a = document.createElement('a');
+    a.href = url;
+    return (a.host && a.host !== window.location.host);
   };
 
-  const handleFile = (file) => {
-    setPhotoArray((prev) => (
-      [...prev, { id: photoArray.length + 1, url: URL.createObjectURL(file) }]
-    ));
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (
+      starRating !== 0
+      && Object.keys(newReviewCharacteristics).length === Object.keys(characteristicsData).length
+      && summeryInput !== ''
+      && reviewBody.length > 50
+      && nickName !== ''
+      && (photoArray.every((photo) => checkPhoto(photo)) || photoArray.length === 0)
+      && /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)
+    ) {
+      const config = {
+        url: '/api/reviews',
+        method: 'POST',
+        data: {
+          product_id: productId,
+          rating: starRating,
+          summary: summeryInput.replaceAll(/\n/g, ' '),
+          body: reviewBody.replaceAll(/\n/g, ' '),
+          recommend,
+          name: nickName.replaceAll(/\n/g, ' '),
+          email,
+          photos: photoArray,
+          characteristics: newReviewCharacteristics,
+        },
+      };
+      try {
+        await axios(config);
+        setNewReviewModalOpen(false);
+      } catch (e) {
+        setSubmitError(true);
+        return;
+      }
+    }
+    setSubmitError(true);
+  };
+
+  const handleFile = (event) => {
+    event.preventDefault();
+    if (checkPhoto(photoUrl)) {
+      setPhotoArray((prev) => (
+        [...prev, photoUrl]
+      ));
+      setPhotoUrl('');
+    }
+  };
+
+  const displayPhoto = (photo, index) => {
+    const objPhoto = { id: index, url: photo };
+    return <ImageModal key={index} photo={objPhoto} />;
   };
 
   return (
@@ -203,11 +255,11 @@ export default function WriteReviewModal(input) {
                 <div className="reviewCharacteristic-container">
                   <p className="characteristicCat">Size:</p>
                   <p className="characteristicCurrentSelect">{showCurrentSelection('Size')}</p>
-                  <input className="reviewInput1" id="1" type="radio" name="size" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Size: { id: characteristicsData.Size.id, value: 1 } }))} />
-                  <input className="reviewInput2" id="2" type="radio" name="size" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Size: { id: characteristicsData.Size.id, value: 2 } }))} />
-                  <input className="reviewInput3" id="3" type="radio" name="size" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Size: { id: characteristicsData.Size.id, value: 3 } }))} />
-                  <input className="reviewInput4" id="4" type="radio" name="size" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Size: { id: characteristicsData.Size.id, value: 4 } }))} />
-                  <input className="reviewInput5" id="5" type="radio" name="size" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Size: { id: characteristicsData.Size.id, value: 5 } }))} />
+                  <input className="reviewInput1" id="1" type="radio" name="size" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Size.id]: 1 }))} />
+                  <input className="reviewInput2" id="2" type="radio" name="size" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Size.id]: 2 }))} />
+                  <input className="reviewInput3" id="3" type="radio" name="size" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Size.id]: 3 }))} />
+                  <input className="reviewInput4" id="4" type="radio" name="size" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Size.id]: 4 }))} />
+                  <input className="reviewInput5" id="5" type="radio" name="size" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Size.id]: 5 }))} />
                   <br />
                   <label className="reviewLabel1" htmlFor="1">A size too small</label>
                   <label className="reviewLabel2" htmlFor="2">1/2 a size too small</label>
@@ -224,11 +276,11 @@ export default function WriteReviewModal(input) {
                 <div className="reviewCharacteristic-container">
                   <p className="characteristicCat">Width:</p>
                   <p className="characteristicCurrentSelect">{showCurrentSelection('Width')}</p>
-                  <input className="reviewInput1" id="1" type="radio" name="width" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Width: { id: characteristicsData.Width.id, value: 1 } }))} />
-                  <input className="reviewInput2" id="2" type="radio" name="width" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Width: { id: characteristicsData.Width.id, value: 2 } }))} />
-                  <input className="reviewInput3" id="3" type="radio" name="width" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Width: { id: characteristicsData.Width.id, value: 3 } }))} />
-                  <input className="reviewInput4" id="4" type="radio" name="width" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Width: { id: characteristicsData.Width.id, value: 4 } }))} />
-                  <input className="reviewInput5" id="5" type="radio" name="width" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Width: { id: characteristicsData.Width.id, value: 5 } }))} />
+                  <input className="reviewInput1" id="1" type="radio" name="width" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Width.id]: 1 }))} />
+                  <input className="reviewInput2" id="2" type="radio" name="width" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Width.id]: 2 }))} />
+                  <input className="reviewInput3" id="3" type="radio" name="width" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Width.id]: 3 }))} />
+                  <input className="reviewInput4" id="4" type="radio" name="width" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Width.id]: 4 }))} />
+                  <input className="reviewInput5" id="5" type="radio" name="width" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Width.id]: 5 }))} />
                   <br />
                   <label className="reviewLabel1" htmlFor="1">Too narrow</label>
                   <label className="reviewLabel2" htmlFor="2">Slightly narrow</label>
@@ -245,11 +297,11 @@ export default function WriteReviewModal(input) {
                 <div className="reviewCharacteristic-container">
                   <p className="characteristicCat">Comfort:</p>
                   <p className="characteristicCurrentSelect">{showCurrentSelection('Comfort')}</p>
-                  <input className="reviewInput1" id="1" type="radio" name="comfort" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Comfort: { id: characteristicsData.Comfort.id, value: 1 } }))} />
-                  <input className="reviewInput2" id="2" type="radio" name="comfort" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Comfort: { id: characteristicsData.Comfort.id, value: 2 } }))} />
-                  <input className="reviewInput3" id="3" type="radio" name="comfort" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Comfort: { id: characteristicsData.Comfort.id, value: 3 } }))} />
-                  <input className="reviewInput4" id="4" type="radio" name="comfort" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Comfort: { id: characteristicsData.Comfort.id, value: 4 } }))} />
-                  <input className="reviewInput5" id="5" type="radio" name="comfort" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Comfort: { id: characteristicsData.Comfort.id, value: 5 } }))} />
+                  <input className="reviewInput1" id="1" type="radio" name="comfort" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Comfort.id]: 1 }))} />
+                  <input className="reviewInput2" id="2" type="radio" name="comfort" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Comfort.id]: 2 }))} />
+                  <input className="reviewInput3" id="3" type="radio" name="comfort" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Comfort.id]: 3 }))} />
+                  <input className="reviewInput4" id="4" type="radio" name="comfort" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Comfort.id]: 4 }))} />
+                  <input className="reviewInput5" id="5" type="radio" name="comfort" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Comfort.id]: 5 }))} />
                   <br />
                   <label className="reviewLabel1" htmlFor="1">Uncomfortable</label>
                   <label className="reviewLabel2" htmlFor="2">Slightly uncomfortable</label>
@@ -266,11 +318,11 @@ export default function WriteReviewModal(input) {
                 <div className="reviewCharacteristic-container">
                   <p className="characteristicCat">Quality:</p>
                   <p className="characteristicCurrentSelect">{showCurrentSelection('Quality')}</p>
-                  <input className="reviewInput1" id="1" type="radio" name="quality" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Quality: { id: characteristicsData.Quality.id, value: 1 } }))} />
-                  <input className="reviewInput2" id="2" type="radio" name="quality" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Quality: { id: characteristicsData.Quality.id, value: 2 } }))} />
-                  <input className="reviewInput3" id="3" type="radio" name="quality" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Quality: { id: characteristicsData.Quality.id, value: 3 } }))} />
-                  <input className="reviewInput4" id="4" type="radio" name="quality" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Quality: { id: characteristicsData.Quality.id, value: 4 } }))} />
-                  <input className="reviewInput5" id="5" type="radio" name="quality" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Quality: { id: characteristicsData.Comfort.id, value: 5 } }))} />
+                  <input className="reviewInput1" id="1" type="radio" name="quality" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Quality.id]: 1 }))} />
+                  <input className="reviewInput2" id="2" type="radio" name="quality" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Quality.id]: 2 }))} />
+                  <input className="reviewInput3" id="3" type="radio" name="quality" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Quality.id]: 3 }))} />
+                  <input className="reviewInput4" id="4" type="radio" name="quality" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Quality.id]: 4 }))} />
+                  <input className="reviewInput5" id="5" type="radio" name="quality" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Quality.id]: 5 }))} />
                   <br />
                   <label className="reviewLabel1" htmlFor="1">Poor</label>
                   <label className="reviewLabel2" htmlFor="2">Below average</label>
@@ -287,11 +339,11 @@ export default function WriteReviewModal(input) {
                 <div className="reviewCharacteristic-container">
                   <p className="characteristicCat">Length:</p>
                   <p className="characteristicCurrentSelect">{showCurrentSelection('Length')}</p>
-                  <input className="reviewInput1" id="1" type="radio" name="length" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Length: { id: characteristicsData.Length.id, value: 1 } }))} />
-                  <input className="reviewInput2" id="2" type="radio" name="length" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Length: { id: characteristicsData.Length.id, value: 2 } }))} />
-                  <input className="reviewInput3" id="3" type="radio" name="length" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Length: { id: characteristicsData.Length.id, value: 3 } }))} />
-                  <input className="reviewInput4" id="4" type="radio" name="length" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Length: { id: characteristicsData.Length.id, value: 4 } }))} />
-                  <input className="reviewInput5" id="5" type="radio" name="length" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Length: { id: characteristicsData.Length.id, value: 5 } }))} />
+                  <input className="reviewInput1" id="1" type="radio" name="length" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Length.id]: 1 }))} />
+                  <input className="reviewInput2" id="2" type="radio" name="length" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Length.id]: 2 }))} />
+                  <input className="reviewInput3" id="3" type="radio" name="length" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Length.id]: 3 }))} />
+                  <input className="reviewInput4" id="4" type="radio" name="length" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Length.id]: 4 }))} />
+                  <input className="reviewInput5" id="5" type="radio" name="length" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Length.id]: 5 }))} />
                   <br />
                   <label className="reviewLabel1" htmlFor="1">Runs short</label>
                   <label className="reviewLabel2" htmlFor="2">Runs slightly short</label>
@@ -308,11 +360,11 @@ export default function WriteReviewModal(input) {
                 <div className="reviewCharacteristic-container">
                   <p className="characteristicCat">Fit:</p>
                   <p className="characteristicCurrentSelect">{showCurrentSelection('Fit')}</p>
-                  <input className="reviewInput1" id="1" type="radio" name="fit" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Fit: { id: characteristicsData.Fit.id, value: 1 } }))} />
-                  <input className="reviewInput2" id="2" type="radio" name="fit" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Fit: { id: characteristicsData.Fit.id, value: 2 } }))} />
-                  <input className="reviewInput3" id="3" type="radio" name="fit" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Fit: { id: characteristicsData.Fit.id, value: 3 } }))} />
-                  <input className="reviewInput4" id="4" type="radio" name="fit" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Fit: { id: characteristicsData.Fit.id, value: 4 } }))} />
-                  <input className="reviewInput5" id="5" type="radio" name="fit" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, Fit: { id: characteristicsData.Fit.id, value: 5 } }))} />
+                  <input className="reviewInput1" id="1" type="radio" name="fit" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Fit.id]: 1 }))} />
+                  <input className="reviewInput2" id="2" type="radio" name="fit" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Fit.id]: 2 }))} />
+                  <input className="reviewInput3" id="3" type="radio" name="fit" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Fit.id]: 3 }))} />
+                  <input className="reviewInput4" id="4" type="radio" name="fit" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Fit.id]: 4 }))} />
+                  <input className="reviewInput5" id="5" type="radio" name="fit" onChange={() => setNewReviewCharacteristics((prev) => ({ ...prev, [characteristicsData.Fit.id]: 5 }))} />
                   <br />
                   <label className="reviewLabel1" htmlFor="1">Runs short</label>
                   <label className="reviewLabel2" htmlFor="2">Runs slightly short</label>
@@ -352,9 +404,19 @@ export default function WriteReviewModal(input) {
             <br />
 
             <p>Upload Photos:</p>
-            <span>{photoArray.map((photo) => <ImageModal key={photo.id} photo={photo} />) }</span>
+            <span style={{ display: 'block' }}>{photoArray.map((photo) => displayPhoto(photo)) }</span>
             {photoArray.length < 5 && (
-              <input name="images" type="file" accept="img/*" multiple onChange={(event) => handleFile(event.target.files[0])} />
+              <>
+                <input
+                  id="images"
+                  type="url"
+                  value={photoUrl}
+                  placeholder="Example: jackson11/exampleImage.com"
+                  style={{ width: '250px' }}
+                  onChange={(event) => setPhotoUrl(event.target.value)}
+                />
+                <button type="submit" htmlFor="images" onClick={(event) => handleFile(event)}>Upload</button>
+              </>
             )}
             <div style={{ backgroundColor: 'black', height: '4px' }} />
             <br />
@@ -377,6 +439,7 @@ export default function WriteReviewModal(input) {
               name="emailInput"
               type="email"
               value={email}
+              style={{ width: '200px' }}
               placeholder="Example: jackson11@email.com"
               maxLength="60"
               onChange={(event) => setEmail(event.target.value)}
@@ -385,7 +448,24 @@ export default function WriteReviewModal(input) {
             <div style={{ backgroundColor: 'black', height: '4px' }} />
             <br />
 
-            <button type="submit" onClick={() => handleSubmit()}>Submit!</button>
+            <button type="submit" style={{ display: 'block' }} onClick={(event) => handleSubmit(event)}>Submit!</button>
+            {submitError && (
+              <p style={{ backgroundColor: 'red' }}>
+                <strong>
+                  This error will occur if:
+                  <br />
+                  Any mandatory fields are blank
+                  <br />
+                  The review body is less than 50 characters
+                  <br />
+                  The email address provided is not in correct email format
+                  <br />
+                  The images selected are invalid or unable to be uploaded.
+                  <br />
+                  Or it is just broken 😢
+                </strong>
+              </p>
+            )}
           </form>
         </div>
       </div>

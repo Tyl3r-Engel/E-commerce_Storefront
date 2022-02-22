@@ -13,16 +13,16 @@ export default function BreakDown(input) {
   }
 
   return (
-    <div>
+    <div key="breakDown">
       {starSort.length !== 0
       && (
         <>
-          <button type="button" className="startSortClearButton" onClick={() => setStarSort([])}>Clear</button>
+          <button type="button" style={{ display: 'block' }} onClick={() => setStarSort([])}>Clear</button>
           {
           starSort.map((element, index) => (
             <>
               {/* eslint-disable-next-line react/no-array-index-key */}
-              <h3 key={index} className="starSortTags" style={{ display: 'inline' }}>
+              <h3 key={index} className="starSortTags">
                 {
                 `has been selected ${element}`
                 }

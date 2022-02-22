@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { RatingsContext } from '../../Context';
 
 export default function breakDownFactors(input) {
   const { characteristics } = input.reviewsMetaData;
   const { setCharacteristicsData } = useContext(RatingsContext);
 
-  setCharacteristicsData(() => characteristics);
+  useEffect(() => setCharacteristicsData(() => characteristics));
+
   return (
     <>
       {characteristics.Size

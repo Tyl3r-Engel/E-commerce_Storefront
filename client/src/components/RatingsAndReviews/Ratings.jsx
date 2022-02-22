@@ -33,16 +33,14 @@ export default function Ratings() {
             <BreakDown reviewsMetaData={reviewsMetaData} />
           </div>
           <div className="recommendations">
-            <span>
-              {
+            {
                 Math.round(10 * (
                   parseInt(reviewsMetaData.recommended.true, 10)
                 / (parseInt(reviewsMetaData.recommended.true, 10)
                 + parseInt(reviewsMetaData.recommended.false, 10))
                 ) * 10)
               }
-              % of reviews recommend this product
-            </span>
+            % of reviews recommend this product
           </div>
           <div className="breakDownFactors">
             <div>

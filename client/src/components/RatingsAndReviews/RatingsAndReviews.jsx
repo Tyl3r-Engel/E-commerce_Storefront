@@ -45,14 +45,19 @@ export default function RatingsAndReviews() {
   };
 
   const renderItem = (index, key) => (
-    <div key={key}>
-      <Review
-        review={currentReviews[index]}
-        sortType={sortType}
-          // eslint-disable-next-line react/jsx-no-bind
-        getCurrentReviews={getCurrentReviews}
-      />
-    </div>
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    <>
+      {currentReviews?.[index] && (
+        <div key={key}>
+          <Review
+            review={currentReviews[index]}
+            sortType={sortType}
+              // eslint-disable-next-line react/jsx-no-bind
+            getCurrentReviews={getCurrentReviews}
+          />
+        </div>
+      )}
+    </>
   );
 
   if (starSort.length !== 0) {
@@ -78,7 +83,8 @@ export default function RatingsAndReviews() {
           productId={context.id}
         />
       )}
-      {currentReviews.length !== 0
+      <div className="review-container">
+        {currentReviews.length !== 0
       && (
         <>
           <span className="reviews-sortedBy">
@@ -98,6 +104,7 @@ export default function RatingsAndReviews() {
               itemRenderer={renderItem}
               length={listLength}
               type="simple"
+              key="list"
             />
           </div>
 
@@ -105,7 +112,8 @@ export default function RatingsAndReviews() {
           && <button type="button" onClick={addMoreReviews}>More Reviews</button>}
         </>
       )}
-      <button type="button" onClick={() => { setNewReviewModalOpen(true); }}>Add A Review</button>
+        <button type="button" onClick={() => { setNewReviewModalOpen(true); }}>Add A Review</button>
+      </div>
       <RatingsContext.Provider value={providerValue}>
         <Ratings />
       </RatingsContext.Provider>
