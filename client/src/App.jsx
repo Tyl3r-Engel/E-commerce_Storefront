@@ -30,14 +30,14 @@ function App() {
 
   return (
     <AppContext.Provider value={currentProduct}>
-      {/* <Overview />
+      <Overview />
       <RelatedItems
         products={currentProducts.data}
         setProduct={setCurrentProduct}
         productId={productId}
         setProductId={setProductId}
       />
-      <Questions /> */}
+      <Questions />
       <RatingsAndReviews />
     </AppContext.Provider>
   );
