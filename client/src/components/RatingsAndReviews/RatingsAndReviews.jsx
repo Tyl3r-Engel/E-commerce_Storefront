@@ -10,7 +10,7 @@ import Review from './Review.jsx';
 import WriteReviewModal from './WriteReviewModal.jsx';
 
 export default function RatingsAndReviews() {
-  const context = useContext(AppContext);
+  const { productId } = useContext(AppContext);
   const [currentReviews, setCurrentReviews] = useState([]);
   const [listLength, setListLength] = useState(2);
   const [sortType, setSortType] = useState('relevant');
@@ -19,7 +19,7 @@ export default function RatingsAndReviews() {
   const [newReviewModalOpen, setNewReviewModalOpen] = useState(false);
 
   const getCurrentReviews = async () => {
-    const { data } = await axios.get(`/api/reviews/?product_id=${context.id}&sort=${sortType}&count=${500}`);
+    const { data } = await axios.get(`/api/reviews/?product_id=${productId}&sort=${sortType}&count=${500}`);
     setCurrentReviews(data.results);
   };
 
@@ -30,11 +30,11 @@ export default function RatingsAndReviews() {
   };
 
   useEffect(() => {
-    if (context?.id) {
+    if (productId) {
       getCurrentReviews();
       setListLength(2);
     }
-  }, [context, sortType, starSort]);
+  }, [productId, sortType, starSort]);
 
   const addMoreReviews = () => {
     if (listLength + 2 > currentReviews.length) {
@@ -68,19 +68,19 @@ export default function RatingsAndReviews() {
 
   const providerValue = useMemo(() => (
     {
-      productId: context.id, setStarSort, starSort, setCharacteristicsData,
+      productId, setStarSort, starSort, setCharacteristicsData,
     }
-  ), [context.id, setStarSort, starSort, setCharacteristicsData]);
+  ), [productId, setStarSort, starSort, setCharacteristicsData]);
 
   return (
-    <div className="ratingsAndReviews-container">
+    <div id="anchor!" className="ratingsAndReviews-container">
       {newReviewModalOpen
       && (
         <WriteReviewModal
           characteristicsData={characteristicsData}
           newReviewModalOpen={newReviewModalOpen}
           setNewReviewModalOpen={setNewReviewModalOpen}
-          productId={context.id}
+          productId={productId}
         />
       )}
       <div className="review-container">

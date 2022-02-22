@@ -28,7 +28,6 @@
   width: 16vw;
   height: 46vh;
   margin-right: 1em;
-  cursor: pointer;
 }
 
 .card-container:hover {
@@ -68,7 +67,6 @@
   width: 100%;
   height: 26vh;
   object-fit: cover;
-  cursor: pointer;
 }
 
 .card-comparison-image {

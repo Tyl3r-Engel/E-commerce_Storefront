@@ -13,24 +13,27 @@ import StarsAndReviews from './StarsAndReviews.jsx';
 
 export default function overview() {
   const [allStyles, setAllStyles] = useState({});
-  const context = useContext(AppContext);
+  const { productId, currentProduct } = useContext(AppContext);
   const [currentStyle, setCurrentStyle] = useState();
   const [currentImage, setCurrentImage] = useState(0);
 
   useEffect(() => {
     setCurrentStyle(allStyles?.[0]);
   }, [allStyles]);
-  async function getStyles() {
-    const { data } = await axios.get(`/api/products/${context.id}/styles`);
+  async function getStyles(test) {
+    const { data } = await axios.get(`/api/products/${test}/styles`);
     setAllStyles(data.results);
   }
+  useEffect(() => {
+    getStyles(productId);
+  }, [productId]);
   const providerValue = useMemo(() => (
     {
       allStyles, currentStyle, setCurrentStyle,
     }
   ), [allStyles, currentStyle, setCurrentStyle]);
-  if (Object.keys(allStyles).length === 0 && context.id !== undefined) {
-    getStyles();
+  if (Object.keys(allStyles).length === 0 && productId !== undefined) {
+    getStyles(productId);
   } else {
     return (
       <OverviewContext.Provider value={providerValue}>
@@ -55,10 +58,10 @@ export default function overview() {
               <StarsAndReviews />
             </div>
             <div className="category">
-              {context.category}
+              {currentProduct.category}
             </div>
             <div className="name">
-              {context.name}
+              {currentProduct.name}
             </div>
             <div className="currentStyle">
               {'STYLE > '}
@@ -66,13 +69,13 @@ export default function overview() {
             </div>
             <div className="price">
               $
-              {context.default_price}
+              {currentProduct.default_price}
             </div>
             <div className="slogan">
-              {context.slogan}
+              {currentProduct.slogan}
             </div>
             <div className="description">
-              {context.description}
+              {currentProduct.description}
             </div>
           </div>
         </StyleContext.Provider>
