@@ -1,15 +1,43 @@
+/* eslint-disable import/extensions */
 import React, { useContext, useState } from 'react';
-import { AppContext } from '../../Context';
+import { OverviewContext } from '../../Context';
+import ProductImageModal from './ProductImageModal.jsx';
 
 export default function CurrentStyleImages() {
-  const context = useContext(AppContext);
+  const {
+    allStyles, currentStyle,
+  } = useContext(OverviewContext);
+  const [
+    currentImage, setCurrentImage,
+  ] = useState(0);
+  if (allStyles !== undefined && currentStyle !== undefined && currentImage !== undefined) {
+    return (
+      <div className="mainImageDiv">
+        <ProductImageModal path={currentStyle.photos[currentImage].url} />
+        {currentImage > 0 && (
+        <div className="leftButton">
+          <button
+            type="button"
+            onClick={() => setCurrentImage((previous) => previous - 1)}
+          >
+            ←
+          </button>
+        </div>
+        )}
+        {currentImage < 5 && (
+        <div className="rightButton">
+          <button
+            type="button"
+            onClick={() => setCurrentImage((previous) => previous + 1)}
+          >
+            →
+          </button>
+        </div>
+        )}
+      </div>
+    );
+  }
   return (
-    <div>
-      <img
-        className="mainImage"
-        src={context.results?.[0].photos[0].url}
-        alt="woof"
-      />
-    </div>
+    null
   );
 }
