@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 import * as React from 'react';
 import { useState, useContext } from 'react';
 import axios from 'axios';
