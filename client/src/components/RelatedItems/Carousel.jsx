@@ -1,18 +1,33 @@
 import React, { useState, useEffect, useContext } from 'react';
+// import { BiLeftArrow, BiRightArrow } from 'react-icons';
+import axios from 'axios';
 import RelatedCard from './RelatedCard.jsx';
 import OutfitCard from './OutfitCard.jsx';
-import { RelatedItemsContext } from '../../Context.js';
-// import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/fa';
-import axios from 'axios';
+import { AppContext } from '../../Context.js';
 
 export default function Carousel() {
-  const [allStyles, setAllStyles] = useState({});
+  // const [relatedProduct, setRelatedProduct] = useState({});
+  // const [relatedProductsStyle, setRelatedProductsStyle] = useState({});
+  const { relatedProducts } = useContext(AppContext);
+
+  // async function getRelatedProductStyle(newProduct) {
+  //   const { data } = await axios.get(`api/products/${newProduct}/styles`);
+  //   setRelatedProductsStyle(data);
+  // }
+
+  // async function getRelatedProduct(newProduct) {
+  //   const { data } = await axios.get(`api/products/${newProduct}`);
+  //   setRelatedProduct(data);
+  // }
+
+  // getRelatedProduct(productId);
+  // getRelatedProductStyle(productId);
+
   // const [currentPos, setCurrentPos] = useState(0);
   // const [length, setLength] = useState(0);
   // const [related, setRelated] = useState(true);
   // const [scrollable, setScrollable] = useState({right: false, left: false});
-  const context = useContext(RelatedItemsContext);
-  const products = context;
+  // const products = context;
 
   // set varibles to determine scrollability
   // useEffect(() => {
@@ -46,44 +61,30 @@ export default function Carousel() {
   //   setCurrentPos(currentPos <= 0 ? 0 : currentPos - 1);
   // };
 
-  if (!products) return 'no data';
-  if (!Array.isArray(products)) return 'not an array';
-
-  async function getStyles() {
-    const { data } = await axios.get(`/api/products/${44388}/styles`);
-    setAllStyles(data);
-  }
-
-  if (Object.keys(allStyles).length === 0 && context !== undefined) {
-    getStyles();
-  }
+  if (!relatedProducts) return 'no data';
+  if (!Array.isArray(relatedProducts)) return 'fetching data';
 
   return (
-    <RelatedItemsContext.Provider value={allStyles}>
-      <section className="carousel">
-        {/* <div>
-          {scrollable.left ?
-            <MdArrowBackIos className='left-arrow' onClick={prevCard}/>
-            : null
-          }
-        </div> */}
-        <div className="cards-container">
-          {products
-            ? products.map((product) => (
-              <RelatedCard
-                product={product}
-                key={product.id}
-              />
-            )) : null}
-          <RelatedCard />
-        </div>
-        {/* <div>
-          {scrollable.right ?
-            <MdArrowForwardIos className='right-arrow' onClick={nextCard}/>
-            : null
-          }
-        </div> */}
-      </section>
-    </RelatedItemsContext.Provider>
+    <section className="carousel">
+      {/* <div>
+        {scrollable.left
+          ? <button className="left-arrow" onClick={prevCard} />
+          : null}
+      </div> */}
+      <div className="cards-container">
+        {relatedProducts
+          ? relatedProducts.map((product) => (
+            <RelatedCard
+              product={product}
+              key={product}
+            />
+          )) : null}
+      </div>
+      {/* <div>
+        {scrollable.right
+          ? <button className="right-arrow" onClick={nextCard} />
+          : null}
+      </div> */}
+    </section>
   );
 }

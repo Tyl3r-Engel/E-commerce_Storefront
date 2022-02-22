@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { RelatedItemsContext } from '../../Context.js';
 import Carousel from './Carousel.jsx';
 
 export default function RelatedItems() {

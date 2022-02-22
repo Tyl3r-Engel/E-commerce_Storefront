@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 import * as React from 'react';
-import { useState, useContext } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { AppContext, RelatedItemsContext } from './Context';
 import Overview from './components/overview/Overview.jsx';
@@ -10,30 +10,34 @@ import RatingsAndReviews from './components/RatingsAndReviews/RatingsAndReviews.
 
 function App() {
   const [currentProduct, setCurrentProduct] = useState({});
-  const [currentProducts, setCurrentProducts] = useState({});
+  const [relatedProducts, setRelatedProducts] = useState(44388);
   const [productId, setProductId] = useState(44388);
 
-  async function getInitProduct() {
-    const { data } = await axios.get('/api/products/44388');
+  async function getProduct(newProductId) {
+    const { data } = await axios.get(`/api/products/${newProductId}`);
     setCurrentProduct(data);
   }
 
-  async function getInitProductArray() {
-    const { data } = await axios.get('/api/products');
-    setCurrentProducts(data);
+  async function getRelatedProducts() {
+    const { data } = await axios.get(`api/products/${productId}/related`);
+    setRelatedProducts(data);
   }
 
-  if (Object.keys(currentProduct).length === 0) {
-    getInitProduct();
-    getInitProductArray();
-  }
+  useEffect(() => {
+    getProduct(productId);
+    getRelatedProducts(productId);
+  }, [productId]);
+
+  const appProvider = useMemo(() => (
+    {
+      productId, setProductId, currentProduct, relatedProducts, getRelatedProducts,
+    }
+  ), [productId, setProductId, currentProduct, relatedProducts, getRelatedProducts]);
 
   return (
-    <AppContext.Provider value={currentProduct}>
+    <AppContext.Provider value={appProvider}>
       <Overview />
-      <RelatedItemsContext.Provider value={currentProducts}>
-        <RelatedItems />
-      </RelatedItemsContext.Provider>
+      <RelatedItems />
       <Questions />
       <RatingsAndReviews />
     </AppContext.Provider>
