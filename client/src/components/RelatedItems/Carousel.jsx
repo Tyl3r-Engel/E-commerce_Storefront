@@ -29,7 +29,7 @@ export default function Carousel() {
             ? products.map((product) => (
               <RelatedCard
                 product={product}
-                // key={productId}
+                key={product.id}
                 // related
                 // product={product}
                 // productId={productId}

@@ -3,7 +3,6 @@ import Modal from 'react-modal';
 import axios from 'axios';
 import { Rating } from 'react-simple-star-rating';
 import { RelatedItemsContext } from '../../Context';
-import { IconName } from 'react-icons/fa';
 import { FaStar } from 'react-icons/fa';
 
 export default function RelatedCard({ product }) {
@@ -62,11 +61,11 @@ export default function RelatedCard({ product }) {
     <RelatedItemsContext.Provider>
       <div className="card-container" data-testid={`related-${product.id}`}>
         <button className="card-inner-container">
-          <FaStar className="card-actionButton" onClick={() => console.log('hi')} />
-          <div className="card-item" onClick={() => openModal()}><img className="card-image" src={allStyles.results?.[0].photos[0].url} /></div>
-          <p className="card-item text category" onClick={() => openModal()}>{product.category.toUpperCase()}</p>
-          <p className="card-item text name" onClick={() => openModal()}>{product.name}</p>
-          <p className="card-item text price" onClick={() => openModal()}>${product.default_price}</p>
+          <FaStar className="card-actionButton" onClick={() => openModal()} />
+          <div className="card-item"><img className="card-image" src={allStyles.results?.[0].photos[0].url} /></div>
+          <p className="card-item text category">{product.category.toUpperCase()}</p>
+          <p className="card-item text name">{product.name}</p>
+          <p className="card-item text price">${product.default_price}</p>
           <p className="card-item text rating"><Rating onClick={handleRating} ratingValue={rating} /></p>
         </button>
         <Modal
@@ -76,12 +75,23 @@ export default function RelatedCard({ product }) {
           contentLabel="Comparison Modal"
         >
           <h2>Item Comparison</h2>
-          <div>Current Product</div>
-          <img className="card-image-compared" src={allStyles.results?.[0].photos[0].url} />
-          <div>Characteristics</div>
-          <div>Compared Product</div>
-          <img className="card-image-compared" src={context.results?.[0].photos[0].url} />
-          <button onClick={closeModal}>close</button>
+          <button className='card-comparison-closeButton' onClick={closeModal}>close</button>
+          <div className='card-comparison-container'>
+            <div>
+              <div>Current Product</div>
+              <img className="card-comparison-image" src={allStyles.results?.[0].photos[0].url} />
+            </div>
+            <div>
+              <div>Characteristics</div>
+              <p>blah</p>
+              <p>blah</p>
+              <p>blah</p>
+            </div>
+            <div>
+              <div>Compared Product</div>
+              <img className="card-comparison-image" src={context.results?.[0].photos[0].url} />
+            </div>
+          </div>
         </Modal>
       </div>
     </RelatedItemsContext.Provider>

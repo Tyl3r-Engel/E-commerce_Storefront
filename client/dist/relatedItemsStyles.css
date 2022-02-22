@@ -71,7 +71,7 @@
   cursor: pointer;
 }
 
-.card-image-compared {
+.card-comparison-image {
   height: 30vh;
   width: 28vh;
 }
@@ -89,4 +89,13 @@
 
 .card-actionButton:hover {
   opacity: 1;
+}
+
+.card-comparison-closeButton {
+  float: right;
+}
+
+.card-comparison-container {
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
