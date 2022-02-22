@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import React, { useState, useContext } from 'react';
 import RelatedCard from './RelatedCard.jsx';
 import OutfitCard from './OutfitCard.jsx';
 import { RelatedItemsContext } from '../../Context.js';
-// import ScrollMenu from 'react-horizontal-scroll-menu';
+import axios from 'axios';
 
 export default function Carousel() {
   const [allStyles, setAllStyles] = useState({});
@@ -27,11 +26,14 @@ export default function Carousel() {
       <section className="carousel">
         <div className="cards-container">
           {products
-            ? products.map((product, index) => (
+            ? products.map((product) => (
               <RelatedCard
-                key={product.id}
                 product={product}
-                index={index}
+                // key={productId}
+                // related
+                // product={product}
+                // productId={productId}
+                // setProductId={setProductId}
               />
             )) : null}
           <RelatedCard />
@@ -40,3 +42,10 @@ export default function Carousel() {
     </RelatedItemsContext.Provider>
   );
 }
+
+// { products, related, productId, setProductId }
+
+// key={product.id}
+// related
+// product={product}
+// productId={product.id}
