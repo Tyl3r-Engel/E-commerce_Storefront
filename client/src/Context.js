@@ -6,8 +6,17 @@ const StyleContext = React.createContext();
 
 const QuestionsContext = React.createContext();
 
+
 const RelatedItemsContext = React.createContext();
 
+
+const RatingsContext = React.createContext();
+
 module.exports = {
-  AppContext, QuestionsContext, OverviewContext, StyleContext,
+  AppContext,
+  QuestionsContext,
+  OverviewContext,
+  StyleContext,
+  RatingsContext,
+  RelatedItemsContext,
 };
