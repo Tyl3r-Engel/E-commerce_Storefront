@@ -28,7 +28,6 @@
   width: 16vw;
   height: 46vh;
   margin-right: 1em;
-  cursor: pointer;
 }
 
 .card-container:hover {
@@ -68,12 +67,17 @@
   width: 100%;
   height: 26vh;
   object-fit: cover;
-  cursor: pointer;
+}
+
+.card-image-compare-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-content: space-between;
 }
 
 .card-image-compared {
-  height: 30vh;
-  width: 28vh;
+  height: 350px;
+  width: 300px;
 }
 
 .card-actionButton {
@@ -89,4 +93,8 @@
 
 .card-actionButton:hover {
   opacity: 1;
+}
+
+.card-image-compare-closeButton {
+  float: right;
 }

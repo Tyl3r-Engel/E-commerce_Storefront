@@ -62,11 +62,11 @@ export default function RelatedCard({ product }) {
     <RelatedItemsContext.Provider>
       <div className="card-container" data-testid={`related-${product.id}`}>
         <button className="card-inner-container">
-          <FaStar className="card-actionButton" onClick={() => console.log('hi')} />
-          <div className="card-item" onClick={() => openModal()}><img className="card-image" src={allStyles.results?.[0].photos[0].url} /></div>
-          <p className="card-item text category" onClick={() => openModal()}>{product.category.toUpperCase()}</p>
-          <p className="card-item text name" onClick={() => openModal()}>{product.name}</p>
-          <p className="card-item text price" onClick={() => openModal()}>${product.default_price}</p>
+          <FaStar className="card-actionButton" onClick={() => openModal()} />
+          <div className="card-item"><img className="card-image" src={allStyles.results?.[0].photos[0].url} /></div>
+          <p className="card-item text category">{product.category.toUpperCase()}</p>
+          <p className="card-item text name">{product.name}</p>
+          <p className="card-item text price">${product.default_price}</p>
           <p className="card-item text rating"><Rating onClick={handleRating} ratingValue={rating} /></p>
         </button>
         <Modal
@@ -75,13 +75,35 @@ export default function RelatedCard({ product }) {
           style={customStyles}
           contentLabel="Comparison Modal"
         >
-          <h2>Item Comparison</h2>
-          <div>Current Product</div>
-          <img className="card-image-compared" src={allStyles.results?.[0].photos[0].url} />
-          <div>Characteristics</div>
-          <div>Compared Product</div>
-          <img className="card-image-compared" src={context.results?.[0].photos[0].url} />
-          <button onClick={closeModal}>close</button>
+          <div>
+            <h2>Item Comparison</h2>
+            <button className="card-image-compare-closeButton" onClick={closeModal}>close</button>
+            <div className='card-image-compare-container'>
+              <div>
+                <p>Current Product</p>
+                <img className="card-image-compared" src={allStyles.results?.[0].photos[0].url} />
+                <p className="card-item-text-category" onClick={() => openModal()}>{product.category.toUpperCase()}</p>
+                <p className="card-item-text-name" onClick={() => openModal()}>{product.name}</p>
+                <p className="card-item-text-price" onClick={() => openModal()}>${product.default_price}</p>
+                <p className="card-item-text-rating"><Rating onClick={handleRating} ratingValue={rating} /></p>
+              </div>
+              <div className='card-item-text-category'>
+                Characteristics
+                <p>Made Brand</p>
+                <p>Material</p>
+                <p>Washable</p>
+                <p>On Sale</p>
+              </div>
+              <div>
+                <p>Compared Product</p>
+                <img className="card-image-compared" src={context.results?.[0].photos[0].url} />
+                <p className="card-item-text-category" onClick={() => openModal()}>{product.category.toUpperCase()}</p>
+                <p className="card-item-text-name" onClick={() => openModal()}>{product.name}</p>
+                <p className="card-item-text-price" onClick={() => openModal()}>${product.default_price}</p>
+                <p className="card-item-text-rating"><Rating onClick={handleRating} ratingValue={rating} /></p>
+              </div>
+            </div>
+          </div>
         </Modal>
       </div>
     </RelatedItemsContext.Provider>
