@@ -1,50 +1,90 @@
 /* eslint-disable import/extensions */
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
+import React, {
+  useContext, useEffect, useMemo, useState,
+} from 'react';
 import ReactList from 'react-list';
-import { AppContext } from '../../Context';
+import { AppContext, RatingsContext } from '../../Context';
+import Ratings from './Ratings.jsx';
 import Review from './Review.jsx';
+import WriteReviewModal from './WriteReviewModal.jsx';
 
 export default function RatingsAndReviews() {
   const context = useContext(AppContext);
   const [currentReviews, setCurrentReviews] = useState([]);
   const [listLength, setListLength] = useState(2);
   const [sortType, setSortType] = useState('relevant');
+  const [starSort, setStarSort] = useState([]);
+  const [characteristicsData, setCharacteristicsData] = useState({});
+  const [newReviewModalOpen, setNewReviewModalOpen] = useState(false);
 
-  async function getCurrentReviews() {
+  const getCurrentReviews = async () => {
     const { data } = await axios.get(`/api/reviews/?product_id=${context.id}&sort=${sortType}&count=${500}`);
     setCurrentReviews(data.results);
-  }
+  };
+
+  const sortByStars = () => {
+    const sortedByStars = currentReviews
+      .filter((element) => starSort.includes(parseInt(element.rating, 10)));
+    setCurrentReviews(sortedByStars);
+  };
 
   useEffect(() => {
     if (context?.id) {
       getCurrentReviews();
       setListLength(2);
     }
-  }, [context, sortType]);
+  }, [context, sortType, starSort]);
 
-  function addMoreReviews() {
+  const addMoreReviews = () => {
     if (listLength + 2 > currentReviews.length) {
       setListLength((preListLength) => preListLength + 1);
       return;
     }
     setListLength((preListLength) => preListLength + 2);
-  }
+  };
 
   const renderItem = (index, key) => (
-    <div key={key}>
-      <Review
-        review={currentReviews[index]}
-        sortType={sortType}
-        // eslint-disable-next-line react/jsx-no-bind
-        getCurrentReviews={getCurrentReviews}
-      />
-    </div>
+    // eslint-disable-next-line react/jsx-no-useless-fragment
+    <>
+      {currentReviews?.[index] && (
+        <div key={key}>
+          <Review
+            review={currentReviews[index]}
+            sortType={sortType}
+              // eslint-disable-next-line react/jsx-no-bind
+            getCurrentReviews={getCurrentReviews}
+          />
+        </div>
+      )}
+    </>
   );
+
+  if (starSort.length !== 0) {
+    if (!currentReviews.every((element) => starSort.includes(parseInt(element.rating, 10)))) {
+      sortByStars();
+    }
+  }
+
+  const providerValue = useMemo(() => (
+    {
+      productId: context.id, setStarSort, starSort, setCharacteristicsData,
+    }
+  ), [context.id, setStarSort, starSort, setCharacteristicsData]);
 
   return (
     <div className="ratingsAndReviews-container">
-      {currentReviews.length !== 0
+      {newReviewModalOpen
+      && (
+        <WriteReviewModal
+          characteristicsData={characteristicsData}
+          newReviewModalOpen={newReviewModalOpen}
+          setNewReviewModalOpen={setNewReviewModalOpen}
+          productId={context.id}
+        />
+      )}
+      <div className="review-container">
+        {currentReviews.length !== 0
       && (
         <>
           <span className="reviews-sortedBy">
@@ -64,6 +104,7 @@ export default function RatingsAndReviews() {
               itemRenderer={renderItem}
               length={listLength}
               type="simple"
+              key="list"
             />
           </div>
 
@@ -71,7 +112,11 @@ export default function RatingsAndReviews() {
           && <button type="button" onClick={addMoreReviews}>More Reviews</button>}
         </>
       )}
-      <button type="button">Add A Review</button>
+        <button type="button" onClick={() => { setNewReviewModalOpen(true); }}>Add A Review</button>
+      </div>
+      <RatingsContext.Provider value={providerValue}>
+        <Ratings />
+      </RatingsContext.Provider>
     </div>
   );
 }

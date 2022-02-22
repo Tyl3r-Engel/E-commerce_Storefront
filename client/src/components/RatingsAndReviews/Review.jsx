@@ -73,6 +73,8 @@ export default function Review(input) {
 
   const helpfulSubmit = async (change) => {
     if (!change) {
+      // await axios.put(`/api/reviews/${review_id}/report`);
+      // getCurrentReviews();
       setHasVoted(true);
       return;
     }
