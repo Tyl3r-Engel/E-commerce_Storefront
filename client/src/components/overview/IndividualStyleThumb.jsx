@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 import React, { useContext } from 'react';
 import { OverviewContext } from '../../Context.js';
 

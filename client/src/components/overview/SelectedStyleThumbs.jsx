@@ -1,4 +1,5 @@
-import React, { useContext, useState } from 'react';
+/* eslint-disable import/extensions */
+import React, { useContext } from 'react';
 import { OverviewContext } from '../../Context';
 import IndvidualProductThumb from './IndividualProductThumb.jsx';
 

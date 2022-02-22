@@ -3,7 +3,7 @@ import { StyleContext } from '../../Context';
 
 export default function IndvidualProductThumb(input) {
   const { photo, index } = input;
-  const { currentImage, setCurrentImage } = useContext(StyleContext);
+  const { currentImage } = useContext(StyleContext);
   if (currentImage === index) {
     return (
       <img

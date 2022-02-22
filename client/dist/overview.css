@@ -135,6 +135,23 @@ position: absolute;
   grid-template-rows: 200px 200px 200px;
   gap: 1.2vw;
 }
+.overview-modal-container .overview-image{
+  position: relative;
+  margin: auto;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.overview-modal-container .imageButton{
+  position: fixed;
+  bottom:4em;
+  right:4em;
+  background-color:#8F0005;
+  border-radius:1.5em;
+  color:white;
+  text-transform:uppercase;
+  padding:1em 1.5em;
+  }
 .mainDiv {
   justify-content: center;
     margin-top: 2%;

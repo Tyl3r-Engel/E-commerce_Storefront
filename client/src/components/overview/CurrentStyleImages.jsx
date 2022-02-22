@@ -1,5 +1,7 @@
+/* eslint-disable import/extensions */
 import React, { useContext, useState } from 'react';
-import { OverviewContext, StyleContext } from '../../Context';
+import { OverviewContext } from '../../Context';
+import ProductImageModal from './ProductImageModal.jsx';
 
 export default function CurrentStyleImages() {
   const {
@@ -8,15 +10,10 @@ export default function CurrentStyleImages() {
   const [
     currentImage, setCurrentImage,
   ] = useState(0);
-  console.log(currentImage);
   if (allStyles !== undefined && currentStyle !== undefined && currentImage !== undefined) {
     return (
       <div className="mainImageDiv">
-        <img
-          className="mainImage"
-          src={currentStyle.photos[currentImage].url}
-          alt="woof"
-        />
+        <ProductImageModal path={currentStyle.photos[currentImage].url} />
         {currentImage > 0 && (
         <div className="leftButton">
           <button

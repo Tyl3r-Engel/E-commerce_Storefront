@@ -1,9 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { OverviewContext } from '../../Context';
+// eslint-disable-next-line import/extensions
 import IndividualStyleThumb from './IndividualStyleThumb.jsx';
 
 export default function CurrentStyleThumbs() {
-  const { allStyles, currentStyle, setCurrentStyle } = useContext(OverviewContext);
+  const { allStyles } = useContext(OverviewContext);
   if (Object.keys(allStyles).length !== 0) {
     return (
       <div>

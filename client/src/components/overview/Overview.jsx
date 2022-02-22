@@ -21,7 +21,6 @@ export default function overview() {
     setCurrentStyle(allStyles?.[0]);
   }, [allStyles]);
   async function getStyles() {
-    console.log('this ran');
     const { data } = await axios.get(`/api/products/${context.id}/styles`);
     setAllStyles(data.results);
   }
@@ -31,7 +30,6 @@ export default function overview() {
     }
   ), [allStyles, currentStyle, setCurrentStyle]);
   if (Object.keys(allStyles).length === 0 && context.id !== undefined) {
-    console.log(allStyles, context.id);
     getStyles();
   } else {
     return (
@@ -39,7 +37,7 @@ export default function overview() {
         <StyleContext.Provider value={[currentImage, setCurrentImage]}>
           <div className="mainDiv">
             <div className="image-container">
-              <CurrentStyleImages />
+              <CurrentStyleImages currentImage={currentImage} setCurrentImage={setCurrentImage} />
             </div>
             <div className="productThumbsDiv">
               <SelectedStyleThumbs />
