@@ -1,16 +1,16 @@
 
 /* Carousel */
-.carousel {
+/* .carousel {
   position: relative;
   height: 44vh;
   justify-items: center;
   align-items: center;
   margin: 1em 0 1em 0;
   overflow-x: hidden;
-}
+} */
 
 /* Item Cards */
-.cards-container {
+/* .cards-container {
   position: relative;
   width: 100%;
   height: 44vh;
@@ -97,4 +97,224 @@
   display: inline-grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 20px;
+} */
+
+/* ------------ Related Items ------------ */
+.section-header {
+  margin-top: 1em;
+  font-weight: lighter;
+}
+
+.carousel {
+  position: relative;
+  height: 44vh;
+  max-width: 70%;
+  margin: 0 auto !important;
+  float: none !important; 
+  display: grid;
+  grid-template-columns: 1fr 18fr 1fr;
+  justify-items: center;
+  align-items: center;
+  margin: 1em 0 1em 0;
+  overflow-x: hidden;
+}
+
+.cards-container {
+  position: relative;
+  /* width: 100%; */
+  /* max-width: 70%;
+  margin: 0 auto !important;
+  float: none !important;  */
+  height: 44vh;
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: left;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+.card-container {
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr;
+  width: 16vw;
+  height: 40vh;
+  margin-right: 1em;
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.card-container:hover {
+  opacity: 1;
+}
+
+.card-inner-container {
+  position: relative;
+  /* display: grid; */
+  /* grid-template-rows: 1fr 1fr 1fr 1fr 1fr; */
+  width: 16vw;
+  height: 40vh;
+  box-shadow: 3px 2px 2px grey;
+  border: 1px solid;
+}
+
+.card-actionButton {
+  position: absolute;
+  right: 0;
+  padding: 10px;
+  opacity: 0.5;
+  font-size: 25px;
+  background-color: transparent;
+  color: rgb(255, 188, 11);
+  cursor: pointer;
+}
+
+.card-actionButton:hover {
+  opacity: 1;
+}
+
+.card-item.text {
+  margin: 6px 12px 8px 5px;
+  font: 15px Arial, sans-serif;
+}
+
+.card-item.text.name {
+  font-weight: bold;
+}
+
+.card-item.text.rating {
+  margin-top: 0;
+}
+
+.card-image {
+  width: 100%;
+  height: 22vh;
+  object-fit: cover;
+}
+
+.empty-card {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  justify-items: center;
+  align-items: center;
+  width: 16vw;
+  height: 40vh;
+  margin-right: 1em;
+  box-shadow: 3px 2px 2px grey;
+  border: 1px solid;
+  cursor: pointer;
+  user-select: none;
+  opacity: 0.8;
+}
+.empty-card:hover {
+  opacity: 1;
+}
+
+#add-outfit-btn {
+  font-size: 3rem;
+}
+
+.right-arrow {
+  font-size: 3rem;
+  color: #000;
+  background: white;
+  opacity: .75;
+  z-index: 10;
+  cursor: pointer;
+  user-select: none;
+}
+
+.left-arrow {
+  font-size: 3rem;
+  color: #000;
+  background: white;
+  opacity: .75;
+  z-index: 10;
+  cursor: pointer;
+  user-select: none;
+}
+
+.action-btn {
+  font-size: 1.5rem;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  cursor: pointer;
+  user-select: none;
+  opacity: .75;
+  border-radius: 2rem;
+  box-shadow: 3px 2px 2px #333;
+  z-index: 10;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: .7;
+  z-index: 1000;
+}
+
+.compare-modal {
+  display: grid;
+  grid-template-rows: 1fr 8fr;
+  justify-content: space-around;
+  align-items: start;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 2em;
+  height: auto;
+  width: auto;
+  z-index: 1000;
+  text-align: center;
+  font: 2vh Arial, sans-serif;
+  border: 1px solid;
+  box-shadow: 3px 2px 2px #333;
+}
+
+.compare-table {
+  display: grid;
+  grid-template-rows: 1fr 8fr;
+  border: 1px solid;
+  height: 30vh;
+}
+
+.compare-header {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  place-items: center;
+  border: 1px solid;
+}
+
+.compare-body {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  border: 1px solid;
+}
+
+.modal-title {
+  font-size: 2.5vh;
+  font-weight: lighter;
+  text-align: left;
+}
+
+.modal-header {
+  margin: .5vw;
+  font-weight: bold;
+}
+
+
+.modal-body {
+  margin: .5vw;
+  font-weight: lighter;
+}
+
+.feature-list {
+  display: grid;
+  grid-auto-rows: auto;
 }

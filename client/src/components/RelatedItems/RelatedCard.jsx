@@ -6,7 +6,7 @@ import { FaStar } from 'react-icons/fa';
 import { AppContext } from '../../Context';
 
 export default function RelatedCard({ product }) {
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(85);
   const [relatedProduct, setRelatedProduct] = useState({});
   const [relatedProductsStyle, setRelatedProductsStyle] = useState({});
   const [modalIsOpen, setIsOpen] = React.useState(false);
