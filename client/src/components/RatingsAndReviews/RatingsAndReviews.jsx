@@ -46,18 +46,17 @@ export default function RatingsAndReviews() {
 
   const renderItem = (index, key) => (
     // eslint-disable-next-line react/jsx-no-useless-fragment
-    <>
+    <div key={key}>
       {currentReviews?.[index] && (
-        <div key={key}>
-          <Review
-            review={currentReviews[index]}
-            sortType={sortType}
+      <Review
+        review={currentReviews[index]}
+        sortType={sortType}
               // eslint-disable-next-line react/jsx-no-bind
-            getCurrentReviews={getCurrentReviews}
-          />
-        </div>
+        getCurrentReviews={getCurrentReviews}
+        key={Math.random() * 50000}
+      />
       )}
-    </>
+    </div>
   );
 
   if (starSort.length !== 0) {
@@ -104,7 +103,6 @@ export default function RatingsAndReviews() {
               itemRenderer={renderItem}
               length={listLength}
               type="simple"
-              key="list"
             />
           </div>
 

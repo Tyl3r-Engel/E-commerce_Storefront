@@ -6,7 +6,13 @@ import { RatingsContext } from '../../Context';
 export default function BreakDown(input) {
   const { reviewsMetaData } = input;
   const { setStarSort, starSort } = useContext(RatingsContext);
-  const ratingValues = Object.values(reviewsMetaData.ratings);
+  const ratingValues = Object.values({
+    5: reviewsMetaData.ratings['5'] || 0,
+    4: reviewsMetaData.ratings['4'] || 0,
+    3: reviewsMetaData.ratings['3'] || 0,
+    2: reviewsMetaData.ratings['2'] || 0,
+    1: reviewsMetaData.ratings['1'] || 0,
+  });
   let numberOfReviews = 0;
   for (let i = 0; i < ratingValues.length; i += 1) {
     numberOfReviews += parseInt(ratingValues[i], 10);
