@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
-// import { BiLeftArrow, BiRightArrow } from 'react-icons';
-import axios from 'axios';
+import { MdKeyboardArrowRight, MdKeyboardArrowLeft, MdAddToPhotos } from 'react-icons/md';
 import RelatedCard from './RelatedCard.jsx';
 import OutfitCard from './OutfitCard.jsx';
-import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from 'react-icons/md';
 import { AppContext } from '../../Context.js';
 
-export default function Carousel() {
+export default function Carousel({ related, setOutfits, outfitProducts }) {
   // const [relatedProduct, setRelatedProduct] = useState({});
   // const [relatedProductsStyle, setRelatedProductsStyle] = useState({});
-  const { relatedProducts } = useContext(AppContext);
+  const { currentProduct, relatedProducts } = useContext(AppContext);
 
   // async function getRelatedProductStyle(newProduct) {
   //   const { data } = await axios.get(`api/products/${newProduct}/styles`);
@@ -26,7 +24,6 @@ export default function Carousel() {
 
   const [currentPos, setCurrentPos] = useState(0);
   const [length, setLength] = useState(0);
-  const [related, setRelated] = useState(true);
   const [scrollable, setScrollable] = useState({ right: false, left: false });
 
   // set varibles to determine scrollability
@@ -61,32 +58,35 @@ export default function Carousel() {
     setCurrentPos(currentPos <= 0 ? 0 : currentPos - 1);
   };
 
+  const getDefaultStyle = (prod) => {
+    prod.styles.results.forEach((style) => {
+      if (style['default?'] === true) {
+        return style;
+      }
+    });
+    return prod.styles.results[0];
+  };
+
+  const saveOutfit = () => {
+    if (!allOutfits) {
+      const allOutfits = [currentProduct];
+    } else {
+      allOutfits.push(currentProduct);
+    }
+    setOutfits(allOutfits);
+    window.localStorage.setItem('myThreads', JSON.stringify(allOutfits));
+  };
+
+  const deleteOutfit = (id) => {
+    const allOutfits = { ...relatedProducts };
+    delete allOutfits[id];
+    setOutfits(allOutfits);
+    window.localStorage.removeItem('myThreads');
+    window.localStorage.setItem('myThreads', JSON.stringify(allOutfits));
+  };
+
   if (!relatedProducts) return 'no data';
   if (!Array.isArray(relatedProducts)) return 'fetching data';
-
-  // return (
-  //   <section className="carousel">
-  //     {/* <div>
-  //       {scrollable.left
-  //         ? <button className="left-arrow" onClick={prevCard} />
-  //         : null}
-  //     </div> */}
-  //     <div className="cards-container">
-  //       {relatedProducts
-  //         ? relatedProducts.map((product) => (
-  //           <RelatedCard
-  //             product={product}
-  //             key={product}
-  //           />
-  //         )) : null}
-  //     </div>
-  //     {/* <div>
-  //       {scrollable.right
-  //         ? <button className="right-arrow" onClick={nextCard} />
-  //         : null}
-  //     </div> */}
-  //   </section>
-  // );
 
   return (
     <section className="carousel" data-testid="carousel-1">
@@ -103,6 +103,7 @@ export default function Carousel() {
                 <RelatedCard
                   key={product.id}
                   product={product}
+                  related
                 />
               )
               : null
@@ -112,17 +113,20 @@ export default function Carousel() {
           ? (
             <div className="empty-card" onClick={() => saveOutfit()}>
               <h2>Add to Outfit</h2>
-              <button id="add-outfit-btn"></button>
+              <MdAddToPhotos id="add-outfit-btn" />
             </div>
           )
           : null }
-        { length !== 0 && !related && relatedProducts
-          ? Object.values(relatedProducts).map((product, index) => (
+        { length !== 0 && !related && outfitProducts
+          ? Object.values(outfitProducts).map((product, index) => (
             index >= currentPos || currentPos + 1 >= length
               ? (
                 <OutfitCard
                   key={product.id}
-                  outfit={product}
+                  outfitProducts={outfitProducts}
+                  related={false}
+                  getDefaultStyle={getDefaultStyle}
+                  deleteOutfit={deleteOutfit}
                 />
               )
               : null

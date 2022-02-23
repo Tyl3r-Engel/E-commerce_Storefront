@@ -161,7 +161,7 @@
 .card-actionButton {
   position: absolute;
   right: 0;
-  padding: 6px;
+  padding: 10px;
   opacity: 0.5;
   font-size: 25px;
   background-color: transparent;
@@ -174,8 +174,8 @@
 }
 
 .card-item.text {
-  margin: 6px 12px 8px 12px;
-  font: 16px Arial, sans-serif;
+  margin: 6px 12px 8px 5px;
+  font: 15px Arial, sans-serif;
 }
 
 .card-item.text.name {
@@ -188,7 +188,7 @@
 
 .card-image {
   width: 100%;
-  height: 24vh;
+  height: 22vh;
   object-fit: cover;
 }
 
@@ -204,6 +204,10 @@
   border: 1px solid;
   cursor: pointer;
   user-select: none;
+  opacity: 0.8;
+}
+.empty-card:hover {
+  opacity: 1;
 }
 
 #add-outfit-btn {
