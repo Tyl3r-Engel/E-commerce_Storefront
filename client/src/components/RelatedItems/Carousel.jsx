@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import RelatedCard from './RelatedCard.jsx';
 import OutfitCard from './OutfitCard.jsx';
+import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from 'react-icons/md';
 import { AppContext } from '../../Context.js';
 
 export default function Carousel() {
@@ -23,68 +24,116 @@ export default function Carousel() {
   // getRelatedProduct(productId);
   // getRelatedProductStyle(productId);
 
-  // const [currentPos, setCurrentPos] = useState(0);
-  // const [length, setLength] = useState(0);
-  // const [related, setRelated] = useState(true);
-  // const [scrollable, setScrollable] = useState({right: false, left: false});
-  // const products = context;
+  const [currentPos, setCurrentPos] = useState(0);
+  const [length, setLength] = useState(0);
+  const [related, setRelated] = useState(true);
+  const [scrollable, setScrollable] = useState({ right: false, left: false });
 
   // set varibles to determine scrollability
-  // useEffect(() => {
-  //   if (related) {
-  //     setLength(products.length);
-  //   } else {
-  //     setLength(Object.keys(products).length);
-  //   }
-  //   setCurrentPos(0);
-  // }, [products]);
+  useEffect(() => {
+    if (related) {
+      setLength(relatedProducts.length);
+    } else {
+      setLength(Object.keys(relatedProducts).length);
+    }
+    setCurrentPos(0);
+  }, [relatedProducts]);
 
   // check to see if arrow buttons appear
-  // useEffect(() => {
-  //   let buffer = related ? 3 : 2;
-  //   if (currentPos === 0 && currentPos + buffer >= length) {
-  //     setScrollable({left: false, right: false});
-  //   } else if (currentPos === 0 && currentPos + buffer < length) {
-  //     setScrollable({left: false, right: true});
-  //   } else if (currentPos !== 0 && currentPos + buffer >= length) {
-  //     setScrollable({right: false, left: true});
-  //   } else {
-  //     setScrollable({right: true, left: true});
-  //   }
-  // }, [currentPos, length]);
+  useEffect(() => {
+    const buffer = related ? 3 : 2;
+    if (currentPos === 0 && currentPos + buffer >= length) {
+      setScrollable({ left: false, right: false });
+    } else if (currentPos === 0 && currentPos + buffer < length) {
+      setScrollable({ left: false, right: true });
+    } else if (currentPos !== 0 && currentPos + buffer >= length) {
+      setScrollable({ right: false, left: true });
+    } else {
+      setScrollable({ right: true, left: true });
+    }
+  }, [currentPos, length]);
 
-  // const nextCard = () => {
-  //   setCurrentPos(currentPos >= length - 1 ? length - 1 : currentPos + 1);
-  // };
+  const nextCard = () => {
+    setCurrentPos(currentPos >= length - 1 ? length - 1 : currentPos + 1);
+  };
 
-  // const prevCard = () => {
-  //   setCurrentPos(currentPos <= 0 ? 0 : currentPos - 1);
-  // };
+  const prevCard = () => {
+    setCurrentPos(currentPos <= 0 ? 0 : currentPos - 1);
+  };
 
   if (!relatedProducts) return 'no data';
   if (!Array.isArray(relatedProducts)) return 'fetching data';
 
+  // return (
+  //   <section className="carousel">
+  //     {/* <div>
+  //       {scrollable.left
+  //         ? <button className="left-arrow" onClick={prevCard} />
+  //         : null}
+  //     </div> */}
+  //     <div className="cards-container">
+  //       {relatedProducts
+  //         ? relatedProducts.map((product) => (
+  //           <RelatedCard
+  //             product={product}
+  //             key={product}
+  //           />
+  //         )) : null}
+  //     </div>
+  //     {/* <div>
+  //       {scrollable.right
+  //         ? <button className="right-arrow" onClick={nextCard} />
+  //         : null}
+  //     </div> */}
+  //   </section>
+  // );
+
   return (
-    <section className="carousel">
-      {/* <div>
+    <section className="carousel" data-testid="carousel-1">
+      <div>
         {scrollable.left
-          ? <button className="left-arrow" onClick={prevCard} />
+          ? <MdKeyboardArrowLeft className="left-arrow" onClick={prevCard} />
           : null}
-      </div> */}
-      <div className="cards-container">
-        {relatedProducts
-          ? relatedProducts.map((product) => (
-            <RelatedCard
-              product={product}
-              key={product}
-            />
-          )) : null}
       </div>
-      {/* <div>
-        {scrollable.right
-          ? <button className="right-arrow" onClick={nextCard} />
+      <div className="cards-container">
+        { length !== 0 && related && relatedProducts
+          ? relatedProducts.map((product, index) => (
+            index >= currentPos || currentPos + 2 >= length
+              ? (
+                <RelatedCard
+                  key={product.id}
+                  product={product}
+                />
+              )
+              : null
+          ))
           : null}
-      </div> */}
+        {!related
+          ? (
+            <div className="empty-card" onClick={() => saveOutfit()}>
+              <h2>Add to Outfit</h2>
+              <button id="add-outfit-btn"></button>
+            </div>
+          )
+          : null }
+        { length !== 0 && !related && relatedProducts
+          ? Object.values(relatedProducts).map((product, index) => (
+            index >= currentPos || currentPos + 1 >= length
+              ? (
+                <OutfitCard
+                  key={product.id}
+                  outfit={product}
+                />
+              )
+              : null
+          ))
+          : null}
+      </div>
+      <div>
+        {scrollable.right
+          ? <MdKeyboardArrowRight className="right-arrow" onClick={nextCard} />
+          : null}
+      </div>
     </section>
   );
 }
