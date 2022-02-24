@@ -5,11 +5,12 @@ import { Rating } from 'react-simple-star-rating';
 import { FaStar } from 'react-icons/fa';
 import { AppContext } from '../../Context';
 
+Modal.setAppElement('#app');
 export default function RelatedCard({ product }) {
   const [rating, setRating] = useState(85);
   const [relatedProduct, setRelatedProduct] = useState({});
   const [relatedProductsStyle, setRelatedProductsStyle] = useState({});
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
   const { currentProduct, setProductId } = useContext(AppContext);
 
   async function getRelatedProductStyle(newProduct) {
@@ -37,8 +38,6 @@ export default function RelatedCard({ product }) {
       transform: 'translate(-50%, -50%)',
     },
   };
-
-  Modal.setAppElement('#app');
 
   const handleRating = (rate) => {
     setRating(rate);

@@ -24,7 +24,7 @@ export default function CurrentStyleImages() {
           </button>
         </div>
         )}
-        {currentImage < 5 && (
+        {currentImage < currentStyle.photos.length - 1 && (
         <div className="rightButton">
           <button
             type="button"

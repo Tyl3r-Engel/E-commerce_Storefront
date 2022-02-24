@@ -13,7 +13,6 @@ export default function RelatedItems() {
 
   useEffect(() => {
     const savedOutfits = JSON.parse(window.localStorage.getItem('myThreads'));
-    console.log(savedOutfits);
     savedOutfits ? setOutfits(savedOutfits) : null;
   }, [currentProduct.id]);
 

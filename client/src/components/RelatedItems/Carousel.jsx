@@ -101,7 +101,7 @@ export default function Carousel({ related, setOutfits, outfitProducts }) {
             index >= currentPos || currentPos + 2 >= length
               ? (
                 <RelatedCard
-                  key={product.id}
+                  key={Math.random() * 1000}
                   product={product}
                   related
                 />
@@ -122,7 +122,7 @@ export default function Carousel({ related, setOutfits, outfitProducts }) {
             index >= currentPos || currentPos + 1 >= length
               ? (
                 <OutfitCard
-                  key={product.id}
+                  key={Math.random() * 1000}
                   outfitProducts={outfitProducts}
                   related={false}
                   getDefaultStyle={getDefaultStyle}

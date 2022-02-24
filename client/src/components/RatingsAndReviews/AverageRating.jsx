@@ -5,7 +5,13 @@ export default function AverageRatings(input) {
   const { reviewsMetaData } = input;
   let count = 0;
   let numberOfReviews = 0;
-  const ratingValues = Object.values(reviewsMetaData.ratings);
+  const ratingValues = Object.values({
+    5: reviewsMetaData.ratings['5'] || 0,
+    4: reviewsMetaData.ratings['4'] || 0,
+    3: reviewsMetaData.ratings['3'] || 0,
+    2: reviewsMetaData.ratings['2'] || 0,
+    1: reviewsMetaData.ratings['1'] || 0,
+  });
   for (let i = 0; i < ratingValues.length; i += 1) {
     for (let j = parseInt(ratingValues[i], 10); j > 0; j -= 1) {
       // console.log('j -->', j, 'i -->', i + 1);
@@ -13,6 +19,7 @@ export default function AverageRatings(input) {
     }
     numberOfReviews += parseInt(ratingValues[i], 10);
   }
+
   const average = (Math.round(10 * (count / numberOfReviews)) / 10);
   return (
     <>
