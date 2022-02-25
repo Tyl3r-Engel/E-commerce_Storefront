@@ -10,12 +10,14 @@ import axios from 'axios';
 import getQuestions from './getQuestions.jsx';
 import AnswerImages from './AnswerImages.jsx';
 import { QuestionsContext } from './Questions.jsx';
+import { AppContext } from '../../Context.js';
 import date from './date';
 
 export default function QuestionsListItemAnswers(props) {
   const { answer } = props;
   // eslint-disable-next-line no-unused-vars
   const [questions, setQuestions] = useContext(QuestionsContext);
+  const { productId } = useContext(AppContext);
   const [clickedHelpful, setClickedHelpful] = useState(false);
   const [clickedReport, setClickedReport] = useState(false);
 
@@ -29,7 +31,7 @@ export default function QuestionsListItemAnswers(props) {
       await axios.put(`/api/qa/answers/${answer.id}/helpful`);
       await getQuestions((data) => {
         setQuestions(data);
-      });
+      }, productId);
     }
   }
 

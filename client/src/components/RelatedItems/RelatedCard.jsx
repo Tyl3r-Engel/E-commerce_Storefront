@@ -66,7 +66,7 @@ export default function RelatedCard({ product }) {
       </button>
       <Modal
         isOpen={modalIsOpen}
-        onRequestClose={closeModal}
+        // onRequestClose={closeModal}
         style={customStyles}
         contentLabel="Comparison Modal"
       >
@@ -75,15 +75,17 @@ export default function RelatedCard({ product }) {
         <div className="card-comparison-container">
           <div>
             <div>Current Product</div>
+            <img className="card-image" src={relatedProductsStyle.results?.[0].photos[0].url} />
           </div>
           <div>
             <div>Characteristics</div>
-            <p>blah</p>
-            <p>blah</p>
-            <p>blah</p>
+            <p>characteristic 1</p>
+            <p>characteristic 2</p>
+            <p>characteristic 3</p>
           </div>
           <div>
             <div>Compared Product</div>
+            <img className="card-image" src={currentProduct.results?.[0].photos[0].url} />
           </div>
         </div>
       </Modal>

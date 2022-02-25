@@ -13,7 +13,6 @@ export default function Login() {
   const logIn = (event) => {
     event.preventDefault();
     if (userData.userName.toLowerCase() === 'admin' && userData.password.toLowerCase() === 'admin') {
-      console.log('Welcome Frodo Swaggins');
       setLoggedIn(true);
     }
   };
@@ -23,9 +22,12 @@ export default function Login() {
   }
 
   const findParentOfElement = (event) => {
-    let cName = event.className;
-    let pNode = event.parentNode;
+    let cName = event?.className;
+    let pNode = event?.parentNode;
     const classes = ['mainDiv', 'relatedMain', 'questionsMain', 'ratingsAndReviews-container'];
+    if (cName === null || pNode === null) {
+      return 'body';
+    }
     while (!classes.includes(cName)) {
       if (pNode.parentNode === undefined || pNode.parentNode === null) {
         return 'body';
@@ -44,18 +46,21 @@ export default function Login() {
 
   const secretClickMenu = () => {
     if (loggedIn) {
-      console.log('should run');
-      console.log(clickTracker);
       setProductId(44397);
       return (
         <ReactModal isOpen={modalIsOpen} contentLabel="login Modal">
-          <div className="modal-container">
-            <h2><strong>Welcome to the shire, Love Chase.</strong></h2>
-            <span style={{ fontSize: '10px' }}>(I watched all the movies)</span>
-            <img src="https://i.ibb.co/F042VLF/STRAIGHT-OUTTA-THE-SHIRE-3.jpg" alt="swaggins" style={{ display: 'block' }} />
+          <div className="modal-container" style={{ margin: 'auto' }}>
+            <h2 style={{ textAlign: 'center' }}><strong>Welcome to the shire, Love Chase.</strong></h2>
+            <p style={{
+              textAlign: 'center', margin: 'auto', fontSize: '10px', display: 'block',
+            }}
+            >
+              (I watched all the movies)
+            </p>
+            <img src="https://i.ibb.co/q9Z9R6F/Screen-Shot-2022-02-23-at-12-43-03-PM.png" alt="swagginscrew" height="600px" width="auto" style={{ margin: 'auto', display: 'block' }} />
             <span>
               {clickTracker.map((entry) => (
-                <span style={{ display: 'block' }}>{JSON.stringify(entry).replaceAll('"', ' ')}</span>
+                <span style={{ textAlign: 'center', display: 'block' }}>{JSON.stringify(entry).replaceAll('"', ' ')}</span>
               ))}
             </span>
             <button type="button" className="closeButton" onClick={() => closeModal(false)}>close</button>
@@ -66,10 +71,8 @@ export default function Login() {
     return null;
   };
   const listenerFunction = (event) => {
-    // console.log(event);
     setClickTracker((prevClicks) => ([...prevClicks, { date: new Date(), element: `${event.target.tagName}: ${event.target.className}`, module: findParentOfElement(event.target) }]));
   };
-  // document.getElementById('app').addEventListener('click', (event) => (clickTracker.push({ date: new Date(), element: event.target, module: findParentOfElement(event.target) })));
   useEffect(() => {
     window.addEventListener('click', listenerFunction);
     return () => (window.removeEventListener('click', listenerFunction));

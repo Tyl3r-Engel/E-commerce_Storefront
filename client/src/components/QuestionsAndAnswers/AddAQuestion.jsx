@@ -11,7 +11,7 @@ import { QuestionsContext, SearchContext } from './Questions.jsx';
 import getQuestions from './getQuestions.jsx';
 
 export default function AddAQuestion() {
-  const currentProduct = useContext(AppContext);
+  const { productId, currentProduct } = useContext(AppContext);
   const [questions, setQuestions] = useContext(QuestionsContext);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   Modal.setAppElement('#app');
@@ -41,7 +41,7 @@ export default function AddAQuestion() {
     await axios(config);
     await getQuestions((data) => {
       setQuestions(data);
-    });
+    }, productId);
   }
 
   return (
@@ -58,7 +58,6 @@ export default function AddAQuestion() {
         className="Modal"
         overlayClassName="Overlay"
         isOpen={modalIsOpen}
-        onRequestClose={closeModal}
         contentLabel="Example Modal"
       >
 
