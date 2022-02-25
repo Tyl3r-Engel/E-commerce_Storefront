@@ -9,6 +9,7 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import ReactList from 'react-list';
 import { QuestionsContext } from './Questions.jsx';
+import { AppContext } from '../../Context.js';
 import getQuestions from './getQuestions.jsx';
 import QuestionsListItemAnswers from './QuestionsListItemAnswers.jsx';
 import AddAnAnswer from './AddAnAnswer.jsx';
@@ -17,6 +18,7 @@ export default function QuestionsListItem(props) {
   const { question } = props;
   // eslint-disable-next-line no-unused-vars
   const [questions, setQuestions] = useContext(QuestionsContext);
+  const { productId } = useContext(AppContext);
   const [clickedHelpful, setClickedHelpful] = useState(false);
   const [displayQuantity, setDisplayQuantity] = useState(2);
 
@@ -29,13 +31,11 @@ export default function QuestionsListItem(props) {
 
   async function incrementHelpfulness() {
     if (!clickedHelpful) {
-      console.log('clicked helpful');
       setClickedHelpful(true);
       await axios.put(`/api/qa/questions/${question.question_id}/helpful`);
       await getQuestions((data) => {
-        console.log(data);
         setQuestions(data);
-      });
+      }, productId);
     }
   }
 

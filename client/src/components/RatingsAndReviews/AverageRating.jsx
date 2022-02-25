@@ -14,7 +14,6 @@ export default function AverageRatings(input) {
   });
   for (let i = 0; i < ratingValues.length; i += 1) {
     for (let j = parseInt(ratingValues[i], 10); j > 0; j -= 1) {
-      // console.log('j -->', j, 'i -->', i + 1);
       count += (i + 1);
     }
     numberOfReviews += parseInt(ratingValues[i], 10);

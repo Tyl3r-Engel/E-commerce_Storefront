@@ -30,10 +30,12 @@ export default function AnswerImages(props) {
         className="picModal"
         overlayClassName="Overlay"
         isOpen={modalIsOpen}
-        onRequestClose={closeModal}
         contentLabel="Example Modal"
       >
-        <img src={src} alt="answerpic" height="800px" width="auto" style={{ display: 'inline-block' }} />
+        <div className="modal-container">
+          <img src={src} alt="answerpic" height="800px" width="auto" style={{ display: 'inline-block' }} />
+          <button className="closeButton" type="button" onClick={() => setModalIsOpen(false)}>close</button>
+        </div>
       </Modal>
     </span>
   );

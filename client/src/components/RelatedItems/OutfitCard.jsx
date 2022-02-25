@@ -52,13 +52,11 @@ export default function Carousel({ outfitProducts, related, productId }) {
     setIsOpen(false);
   }
 
-  console.log(outfitProducts);
-
   return (
     <div className="card-container" data-testid={`related-${relatedProduct.id}`}>
       <button className="card-inner-container">
         <FaStar className="card-actionButton" onClick={() => openModal()} />
-        <div className="card-item" onClick={() => setProductId(outfitProducts[0].id)}><img className="card-image" src={relatedProductsStyle.results?.[0].photos[0].url}/></div>
+        <div className="card-item" onClick={() => setProductId(outfitProducts[0].id)}><img className="card-image" src={relatedProductsStyle.results?.[0].photos[0].url} /></div>
         <p className="card-item text category" onClick={() => setProductId(outfitProducts[0].id)}>{outfitProducts[0].category}</p>
         <p className="card-item text name" onClick={() => setProductId(outfitProducts[0].id)}>{outfitProducts[0].name}</p>
         <p className="card-item text price" onClick={() => setProductId(outfitProducts[0].id)}>
@@ -69,7 +67,7 @@ export default function Carousel({ outfitProducts, related, productId }) {
       </button>
       <Modal
         isOpen={modalIsOpen}
-        onRequestClose={closeModal}
+        // onRequestClose={closeModal}
         style={customStyles}
         contentLabel="Comparison Modal"
       >
@@ -81,9 +79,9 @@ export default function Carousel({ outfitProducts, related, productId }) {
           </div>
           <div>
             <div>Characteristics</div>
-            <p>blah</p>
-            <p>blah</p>
-            <p>blah</p>
+            <p>characteristic 1</p>
+            <p>characteristic 2</p>
+            <p>characteristic 3</p>
           </div>
           <div>
             <div>Compared Product</div>
@@ -92,4 +90,4 @@ export default function Carousel({ outfitProducts, related, productId }) {
       </Modal>
     </div>
   );
-};
+}

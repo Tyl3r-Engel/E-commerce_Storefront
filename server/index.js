@@ -40,7 +40,6 @@ app.all('/api/*', async (req, res, next) => {
     const { data } = await axios(config);
     res.json(data);
     res.end();
-    console.log('key:', getApiKey(), 'requestCounter:', requestCounter);
     requestCounter += 1;
     next();
   } catch (error) {

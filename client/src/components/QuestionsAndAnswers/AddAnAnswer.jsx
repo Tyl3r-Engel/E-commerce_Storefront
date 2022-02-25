@@ -14,7 +14,7 @@ import AnswerImages from './AnswerImages.jsx';
 export default function AddAnAnswer(props) {
   // eslint-disable-next-line no-unused-vars
   const [questions, setQuestions] = useContext(QuestionsContext);
-  const currentProduct = useContext(AppContext);
+  const { currentProduct, productId } = useContext(AppContext);
   const { question } = props;
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [photos, setPhotos] = useState([]);
@@ -65,7 +65,7 @@ export default function AddAnAnswer(props) {
     await axios(config);
     await getQuestions((data) => {
       setQuestions(data);
-    });
+    }, productId);
   }
 
   return (
@@ -75,7 +75,6 @@ export default function AddAnAnswer(props) {
         className="Modal"
         overlayClassName="Overlay"
         isOpen={modalIsOpen}
-        onRequestClose={closeModal}
         contentLabel="Example Modal"
       >
         <h3 className="modalText">Submit your Answer</h3>
