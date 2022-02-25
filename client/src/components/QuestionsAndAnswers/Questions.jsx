@@ -31,7 +31,7 @@ function Questions() {
   return (
     <QuestionsContext.Provider value={[questions, setQuestions]}>
       <SearchContext.Provider value={[searchResults, setSearchResults]}>
-        <div id="questionsMain">
+        <div className="questionsMain">
           <p className="questionsTitle">Questions & Answers</p>
           <QuestionsSearch />
           <QuestionsList />

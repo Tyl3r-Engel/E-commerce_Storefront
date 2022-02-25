@@ -17,7 +17,7 @@ export default function RelatedItems() {
   }, [currentProduct.id]);
 
   return (
-    <div>
+    <div className="relatedMain">
       <h2 style={{ textAlign: 'center' }}>Related Items</h2>
       <Carousel
         related
