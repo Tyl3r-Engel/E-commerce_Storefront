@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable import/extensions */
 import * as React from 'react';
 import { useState, useEffect, useMemo } from 'react';
@@ -7,6 +8,7 @@ import Overview from './components/overview/Overview.jsx';
 import RelatedItems from './components/RelatedItems/RelatedItems.jsx';
 import Questions from './components/QuestionsAndAnswers/Questions.jsx';
 import RatingsAndReviews from './components/RatingsAndReviews/RatingsAndReviews.jsx';
+import Login from './components/Login.jsx';
 
 function App() {
   const [currentProduct, setCurrentProduct] = useState({});
@@ -36,6 +38,7 @@ function App() {
 
   return (
     <AppContext.Provider value={appProvider}>
+      <Login />
       <Overview />
       <RelatedItems />
       <Questions />

@@ -5,12 +5,12 @@ import StarRating from 'react-ratings-declarative';
 import { AppContext } from '../../Context';
 
 export default function StarsAndReviews() {
-  const context = useContext(AppContext);
+  const { productId } = useContext(AppContext);
   const [currentReviews, setCurrentReviews] = useState({});
 
   async function getCurrentReviews() {
-    if (context.id !== undefined) {
-      const { data } = await axios.get(`/api/reviews/meta?product_id=${context.id}`);
+    if (productId !== undefined) {
+      const { data } = await axios.get(`/api/reviews/meta?product_id=${productId}`);
       setCurrentReviews(data.ratings);
     }
   }
@@ -36,8 +36,7 @@ export default function StarsAndReviews() {
     return (1 * a + 2 * b + 3 * c + 4 * d + 5 * e) / (r);
   }
   return (
-    <div>
-
+    <>
       <div className="review rating">
         <StarRating
           rating={currentStarRating()}
@@ -59,6 +58,6 @@ export default function StarsAndReviews() {
           See all {totalNumberRatings()} reviews
         </a>
       </div>
-    </div>
+    </>
   );
 }

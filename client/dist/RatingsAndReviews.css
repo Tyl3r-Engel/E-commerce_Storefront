@@ -97,6 +97,10 @@ padding:1em 1.5em;
   "button1 button2 button3 button4 button5"
   "label1 label2 label3 label4 label5";
   justify-content: center;
+  color: darkslategray;
+  font-family: Helvetica;
+  font-size: 18px;
+  font-weight: 700;
 }
 
 .reviewCharacteristic-container .characteristicCat {
