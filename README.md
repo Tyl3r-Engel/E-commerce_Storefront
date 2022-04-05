@@ -8,7 +8,7 @@
 
 ## Description
 
-This application aims to create an E-commerce clothing line store front.
+This application aims to create an E-commerce clothing line storefront.
 
 #### Technologies
 
