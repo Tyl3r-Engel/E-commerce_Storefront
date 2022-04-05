@@ -34,7 +34,7 @@ This application aims to create an E-commerce clothing line store front.
 
 
 #### API Reference
->Inside of the server file a config.js will need to be created.
+>Inside of the server folder a config.js will need to be created.
 ```javascript
   module.exports = {
   API_ROUTE: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-den/',
