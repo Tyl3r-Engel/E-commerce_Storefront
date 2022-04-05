@@ -13,7 +13,7 @@
     "forever-stop": "forever stop server/index.js",
     "forever-running": "forever list",
     "uglify": "uglifyjs client/dist/bundle.js -c -m --mangle-props",
-    "start": "rollup -c rollup.config.js -w"
+    "rollup": "rollup -c rollup.config.js"
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",

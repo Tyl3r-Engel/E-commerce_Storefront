@@ -4,3 +4,4 @@ bundle.js
 bundle.js.map
 App.jsx
 package-lock.json
+client/dist/rolledbundle.js
