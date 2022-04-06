@@ -29,7 +29,8 @@ This application aims to create an E-commerce clothing line storefront.
   $ npm run rollup
   $ npm run express-dev
 ```
-
+#### Usage
+>A user can select the style of the current product as well as scroll through other images of the current product in the over view section. A user can scroll through the realated items section to select the current product that is being viewed by the site. A user can ask and answer questions as well as write reviews and see current statistics about a currnet product.
 
 #### Other Notes
 >Inside of the server folder a config.js will need to be created.
