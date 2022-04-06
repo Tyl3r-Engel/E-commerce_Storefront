@@ -31,7 +31,7 @@ This application aims to create an E-commerce clothing line storefront.
 ```
 
 
-#### API Reference
+#### Other Notes
 >Inside of the server folder a config.js will need to be created.
 ```javascript
   module.exports = {
